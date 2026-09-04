@@ -1,0 +1,72 @@
+{
+  "association": {
+    "easy": 0.9955082742316785,
+    "hard": 0.9574018126888217
+  },
+  "bootstrap": {
+    "improvement_95ci_lower": 0.0628530106799005,
+    "improvement_95ci_upper": 0.09291259959882729,
+    "resamples": 10000,
+    "seed": 20260976,
+    "unit": "sequence"
+  },
+  "held_out_frames": 3200,
+  "incorrect_primary_associations": 198,
+  "methods": {
+    "range_azimuth_vision": {
+      "coverage_95": 0.79025,
+      "mean_position_nees": 297.39284201025777,
+      "method": "range_azimuth_vision",
+      "p95_error_3d_m": 16.71672796318058,
+      "rmse_3d_m": 6.389519636138298,
+      "samples": 16000,
+      "visual_update_rate": 1.0,
+      "z_rmse_m": 3.1133243523578558
+    },
+    "rf_only_full_3d": {
+      "coverage_95": 0.9781875,
+      "mean_position_nees": 2.318910629484271,
+      "method": "rf_only_full_3d",
+      "p95_error_3d_m": 2.9101716555469994,
+      "rmse_3d_m": 1.6341400316157704,
+      "samples": 16000,
+      "visual_update_rate": 0.9908125,
+      "z_rmse_m": 1.2135556762409805
+    },
+    "rf_vision_no_pose_uncertainty": {
+      "coverage_95": 0.6890625,
+      "mean_position_nees": 7.786383152505188,
+      "method": "rf_vision_no_pose_uncertainty",
+      "p95_error_3d_m": 2.8648608229037245,
+      "rmse_3d_m": 1.5057071410386436,
+      "samples": 16000,
+      "visual_update_rate": 0.9908125,
+      "z_rmse_m": 1.1837216441088978
+    },
+    "rf_vision_shared_pose": {
+      "coverage_95": 0.94225,
+      "mean_position_nees": 3.2356524596901135,
+      "method": "rf_vision_shared_pose",
+      "p95_error_3d_m": 2.864863108034239,
+      "rmse_3d_m": 1.5057071552772918,
+      "samples": 16000,
+      "visual_update_rate": 0.9908125,
+      "z_rmse_m": 1.1837216574684506
+    }
+  },
+  "online_ground_truth_fields": [],
+  "paired_primary_samples": 16000,
+  "primary_3d_rmse_reduction": 0.07859355615411331,
+  "primary_z_rmse_reduction": 0.024583972006081766,
+  "sionna_path_truth_passed_to_estimator": false,
+  "status": "COMPLETE",
+  "waveform_model": "analytic_los",
+  "waveform_seeds": [
+    20260971,
+    20260972,
+    20260973,
+    20260974,
+    20260975
+  ],
+  "waveform_snr_db": 0.0
+}

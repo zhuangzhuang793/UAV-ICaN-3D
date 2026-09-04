@@ -1,0 +1,36 @@
+{
+  "checks": {
+    "hard_association_accuracy": {
+      "observed": 0.8655589123867069,
+      "pass": false,
+      "target": 0.9
+    },
+    "minimum_3d_rmse_reduction": {
+      "observed": 0.07859355615411331,
+      "pass": false,
+      "target": 0.15
+    },
+    "positive_95ci_lower_bound": {
+      "observed": 0.0628530106799005,
+      "pass": true,
+      "target": 0.0
+    },
+    "preferred_joint_coverage": {
+      "observed": 0.94225,
+      "pass": true,
+      "target": [
+        0.9,
+        0.98
+      ]
+    },
+    "target_z_rmse_reduction": {
+      "observed": 0.024583972006081766,
+      "pass": false,
+      "target": 0.1
+    }
+  },
+  "decision_rule": "all pre-registered criteria must pass",
+  "f7_hard_association_seeded_diagnostic": 0.9574018126888217,
+  "next_phase_allowed": false,
+  "status": "FAIL"
+}

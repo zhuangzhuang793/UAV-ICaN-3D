@@ -1,6 +1,6 @@
 # FULL localization progress
 
-Current phase: **F7 — pre-freeze audit complete; final test not yet opened**
+Current phase: **F8 — FAIL; stopped before F9**
 
 ## Frozen scope
 
@@ -25,7 +25,9 @@ Current phase: **F7 — pre-freeze audit complete; final test not yet opened**
 - F6-A: **PASS** — Sionna LoS trends agree with the analytic waveform model
 - F6-B: **PASS** — RF+Vision retains aggregate 3-D and Z gains under mild multipath
 - F7 pre-freeze leakage audit: **PASS**
-- F7–F10 final evaluation: not started
+- F7: **COMPLETE** — frozen 16000-pair final evaluation
+- F8: **FAIL** — effect-size, Z, and frozen Hard-association targets not all met
+- F9–F10: not started; prohibited by the failed serial gate
 
 ## F0 frozen artifacts
 
@@ -89,6 +91,17 @@ Current phase: **F7 — pre-freeze audit complete; final test not yet opened**
 - Mild-multipath RF-only / joint Z-RMSE: `2.265 / 1.784 m`
 - Sionna path truth passed to online estimator: `false`
 - Decision: `docs/FULL_SIONNA_INTEGRATION.md`
+
+## F7/F8 final decision
+
+- RF-only / joint 3-D RMSE: `1.634 / 1.506 m` (`7.86%` gain)
+- Sequence-bootstrap 95% gain interval: `[6.29%, 9.29%]`
+- RF-only / joint Z-RMSE: `1.214 / 1.184 m` (`2.46%` gain)
+- Joint nominal 95% coverage: `94.23%`
+- Frozen F4 Hard association: `86.56%`
+- F8 checks passed: positive CI and coverage
+- F8 checks failed: 15% 3-D gain, 10% Z gain, and 90% Hard association
+- Decision: `docs/FULL_F7_F8_DECISION.md`; stop before F9
 
 Formal outputs are isolated under `results/full_localization/`. Prediction, MPC and beam-control
 FULL experiments remain outside this workflow.
