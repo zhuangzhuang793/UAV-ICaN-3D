@@ -1,0 +1,131 @@
+mode: full_localization
+seed: 20260904
+
+system:
+  carrier_hz: 3.5e9
+  upa_shape: [4, 4]
+  rf_observation: [range, azimuth, elevation]
+  camera: onboard_monocular_rgb
+  target: vehicle_mounted_ue
+  shared_pose_uncertainty: true
+
+f0:
+  output_root: data/full_localization
+  frames_per_sequence: 400
+  airsim_host: 127.0.0.1
+  airsim_port: 41451
+  airsim_gpu: 0
+  maximum_rgb_segmentation_delta_s: 0.02
+  minimum_candidate_box_area_px2: 40.0
+  sequence_splits:
+    calibration: [seq00, seq01]
+    validation: [seq02, seq03]
+    test: [seq04, seq05, seq06, seq07, seq08, seq09, seq10, seq11]
+  sequence_profiles:
+    seq00: {altitude_m: 35.0, horizontal_m: 14.0, bearing_deg: 0.0, hard_fraction: 0.25}
+    seq01: {altitude_m: 50.0, horizontal_m: 22.0, bearing_deg: 90.0, hard_fraction: 0.50}
+    seq02: {altitude_m: 35.0, horizontal_m: 18.0, bearing_deg: 180.0, hard_fraction: 0.25}
+    seq03: {altitude_m: 50.0, horizontal_m: 26.0, bearing_deg: 270.0, hard_fraction: 0.50}
+    seq04: {altitude_m: 30.0, horizontal_m: 12.0, bearing_deg: 30.0, hard_fraction: 0.25}
+    seq05: {altitude_m: 40.0, horizontal_m: 18.0, bearing_deg: 75.0, hard_fraction: 0.50}
+    seq06: {altitude_m: 50.0, horizontal_m: 24.0, bearing_deg: 120.0, hard_fraction: 0.75}
+    seq07: {altitude_m: 60.0, horizontal_m: 30.0, bearing_deg: 330.0, hard_fraction: 0.25}
+    seq08: {altitude_m: 35.0, horizontal_m: 16.0, bearing_deg: 210.0, hard_fraction: 0.50}
+    seq09: {altitude_m: 45.0, horizontal_m: 22.0, bearing_deg: 255.0, hard_fraction: 0.75}
+    seq10: {altitude_m: 55.0, horizontal_m: 28.0, bearing_deg: 300.0, hard_fraction: 0.50}
+    seq11: {altitude_m: 65.0, horizontal_m: 34.0, bearing_deg: 345.0, hard_fraction: 0.75}
+  detector:
+    source_dataset: /home/xwl/.cache/kagglehub/datasets/banuprasadb/visdrone-dataset/versions/1/VisDrone_Dataset
+    converted_dataset: data/visdrone_obb
+    base_model: yolo11n-obb.pt
+    target_pattern: '^model\.(13|16|17|19|20|22|23)\.(?!dfl)'
+    rank: 4
+    alpha: 8
+    dropout: 0.05
+    learning_rate: 0.001
+    device: 1
+    image_size_px: 640
+    epochs: 20
+    training_fraction: 1.0
+    batch_size: 32
+    workers: 8
+    patience: 5
+    seed: 20260904
+    runs_dir: runs/full_localization_lora
+    merged_checkpoint: checkpoints/full_localization_lora.pt
+
+f1:
+  calibration_sequences: [seq00, seq01]
+  validation_sequences: [seq02, seq03]
+  detector_confidence: 0.05
+  detector_nms_iou: 0.30
+  detector_vehicle_class_ids: [9, 10]
+  covariance_floor_px2: 1.0
+  c1_ridge_alpha: 1.0
+  selection_confidence: 0.95
+
+f2:
+  altitude_m: [30, 45, 60, 75, 90, 105, 120]
+  horizontal_distance_m: [20, 40, 60, 80, 100, 120, 140, 160, 180, 200]
+  range_std_m: [0.5, 1.0, 2.0, 4.0]
+  aoa_std_deg: [0.25, 0.5, 1.0, 2.0]
+  attitude_std_deg: [0.05, 0.0889139705, 0.1581138830, 0.2811706626, 0.5]
+  nominal_range_std_m: 1.0
+  nominal_aoa_std_deg: 1.0
+  nominal_attitude_std_deg: 0.2
+  pose_position_std_m: 0.2
+  position_covariance_sensitivity_scale: 4.0
+
+f3:
+  representative_geometries: 8
+  monte_carlo_trials: 500
+  coverage_confidence: 0.95
+  selection_rule: gain_quantiles_with_spatial_diversity
+
+f4:
+  rf_gate_confidence: 0.99
+  visual_tracker_process_std_px: 3.0
+  hard_subset_rule: nonserved_candidate_inside_rf_gate
+  gate:
+    require_hard_rf_accuracy_above_visual: true
+
+f5:
+  subcarrier_count: 32
+  subcarrier_spacing_hz: 480000.0
+  snr_db: [-15, -10, -5, 0, 5, 10]
+  waveform_realizations: 200
+  range_grid_m: [10.0, 250.0, 0.1]
+  azimuth_grid_deg: [-90.0, 90.0, 0.5]
+  elevation_grid_deg: [-45.0, 45.0, 0.5]
+
+f6:
+  scene_asset: data/sionna_rt/full_localization_scene.xml
+  los_max_depth: 0
+  multipath_max_depth: 3
+  mild_multipath_reflection_order: 1
+  synthetic_array: false
+  path_truth_firewall: true
+
+f7:
+  test_sequences: [seq04, seq05, seq06, seq07, seq08, seq09, seq10, seq11]
+  rf_seeds: [20260971, 20260972, 20260973, 20260974, 20260975]
+  bootstrap_resamples: 10000
+  bootstrap_unit: sequence
+  coverage_confidence: 0.95
+  primary_methods: [rf_only_full_3d, rf_vision_shared_pose]
+  ablations: [rf_vision_no_pose_uncertainty, range_azimuth_vision]
+
+f8:
+  minimum_3d_rmse_reduction: 0.15
+  require_positive_95ci_lower_bound: true
+  target_z_rmse_reduction: 0.10
+  preferred_coverage_range: [0.90, 0.98]
+  target_hard_association_accuracy: 0.90
+
+outputs:
+  root: results/full_localization
+  progress: docs/FULL_LOCALIZATION_PROGRESS.md
+  data_freeze: docs/FULL_LOCALIZATION_DATA_FREEZE.md
+  visual_calibration: docs/FULL_VISUAL_CALIBRATION.md
+  final_freeze: docs/FULL_LOCALIZATION_FREEZE.md
+  final_report: docs/FULL_LOCALIZATION_REPORT.md

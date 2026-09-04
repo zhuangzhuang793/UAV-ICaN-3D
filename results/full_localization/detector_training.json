@@ -1,0 +1,19 @@
+{
+  "adapted_layers": 50,
+  "alpha": 8.0,
+  "checkpoint": "checkpoints/full_localization_lora.pt",
+  "checkpoint_sha256": "c1a8f9176df331cdf5f695b482322f8f60f3ad0933a4a9a1dca2ae143febb6d1",
+  "dropout": 0.05,
+  "fitness": 0.25758575204293777,
+  "learning_rate": 0.001,
+  "map50": 0.3913053873426671,
+  "map50_95": 0.25758575204293777,
+  "metrics_json": "{\"fitness\": 0.25758575204293777, \"metrics/mAP50(B)\": 0.3913053873426671, \"metrics/mAP50-95(B)\": 0.25758575204293777, \"metrics/precision(B)\": 0.4665332834129807, \"metrics/recall(B)\": 0.3775280147248474}",
+  "name": "formal_r4_a8",
+  "rank": 4,
+  "selection_metric": "validation mAP50-95",
+  "total_parameters": 2757040,
+  "trainable_parameters": 92608,
+  "training_images": 6471,
+  "validation_images": 548
+}
