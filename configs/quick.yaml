@@ -1,0 +1,13 @@
+mode: quick
+seed: 20260904
+
+phase0:
+  random_trials: 8
+  transform_tolerance: 1.0e-10
+  projection_tolerance: 1.0e-12
+  camera:
+    fx_px: 400.0
+    fy_px: 420.0
+    cx_px: 320.0
+    cy_px: 240.0
+
