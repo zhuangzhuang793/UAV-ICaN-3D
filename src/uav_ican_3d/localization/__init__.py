@@ -19,6 +19,7 @@ from .rf_waveform import (
     srs_reference,
     upa_steering,
 )
+from .sionna_channel import SionnaPathChannel, synthesize_sionna_waveform, trace_sionna_channel
 
 __all__ = [
     "PositionBounds",
@@ -41,4 +42,7 @@ __all__ = [
     "simulate_los_srs",
     "srs_reference",
     "upa_steering",
+    "SionnaPathChannel",
+    "synthesize_sionna_waveform",
+    "trace_sionna_channel",
 ]

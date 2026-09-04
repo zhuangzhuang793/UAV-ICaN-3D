@@ -1,0 +1,29 @@
+{
+  "nominal_sionna_to_analytic_rmse_ratio": {
+    "azimuth_rmse_deg": 0.9859928885335687,
+    "elevation_rmse_deg": 1.0314199905352064,
+    "range_rmse_m": 0.9574458970829035
+  },
+  "online_estimator_inputs": [
+    "complex_received_waveform",
+    "known_reference"
+  ],
+  "path_truth_passed_to_online_estimator": false,
+  "paths_per_geometry": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "sionna_version": "2.0.1",
+  "snr_error_spearman": {
+    "azimuth_rmse_deg": -1.0,
+    "elevation_rmse_deg": -1.0,
+    "range_rmse_m": -1.0
+  },
+  "status": "PASS"
+}

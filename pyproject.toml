@@ -3,6 +3,9 @@ name = "uav-ican-3d"
 version = "0.1.0"
 description = "Quick-gated research validation for communication-native 3D radio-visual UAV control."
 requires-python = ">=3.11,<3.13"
+dependencies = [
+    "sionna-rt==2.0.1",
+]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

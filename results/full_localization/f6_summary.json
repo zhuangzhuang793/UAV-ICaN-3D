@@ -1,0 +1,65 @@
+{
+  "gate_a": {
+    "nominal_sionna_to_analytic_rmse_ratio": {
+      "azimuth_rmse_deg": 0.9859928885335687,
+      "elevation_rmse_deg": 1.0314199905352064,
+      "range_rmse_m": 0.9574458970829035
+    },
+    "online_estimator_inputs": [
+      "complex_received_waveform",
+      "known_reference"
+    ],
+    "path_truth_passed_to_online_estimator": false,
+    "paths_per_geometry": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "sionna_version": "2.0.1",
+    "snr_error_spearman": {
+      "azimuth_rmse_deg": -1.0,
+      "elevation_rmse_deg": -1.0,
+      "range_rmse_m": -1.0
+    },
+    "status": "PASS"
+  },
+  "localization": {
+    "gain_3d": 0.8431191921049067,
+    "gain_z": 0.21214289575500472,
+    "joint_rmse_3d_m": 5.452078422705069,
+    "joint_z_rmse_m": 1.7844107765835593,
+    "paired_trials": 1600,
+    "rf_rmse_3d_m": 34.7529981254998,
+    "rf_z_rmse_m": 2.264891395875097
+  },
+  "multipath_nominal_waveform": {
+    "azimuth_bias_deg": -0.3081249999999997,
+    "azimuth_rmse_deg": 10.137415227758998,
+    "elevation_bias_deg": 0.17806643610653983,
+    "elevation_rmse_deg": 0.8929866325385851,
+    "range_bias_m": 1.8367558890688596,
+    "range_rmse_m": 3.22407621597581,
+    "snr_db": 0.0,
+    "waveforms": 1600
+  },
+  "multipath_paths_per_geometry": [
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3
+  ],
+  "new_nlos_mitigation": false,
+  "path_truth_passed_to_online_estimator": false,
+  "scene_sha256": "e6b932006d97505a076e475935cc691e6b7e051fc019f4a9d874175d222179e2",
+  "status": "PASS",
+  "total_reflected_paths": 16
+}

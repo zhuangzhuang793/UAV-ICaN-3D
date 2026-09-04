@@ -150,11 +150,21 @@ f5:
 
 f6:
   scene_asset: data/sionna_rt/full_localization_scene.xml
+  gpu: 3
+  target_height_m: 1.5
   los_max_depth: 0
   multipath_max_depth: 3
   mild_multipath_reflection_order: 1
-  synthetic_array: false
+  samples_per_source: 10000
+  max_paths_per_source: 256
+  synthetic_array: true
   path_truth_firewall: true
+  gate_a:
+    minimum_error_snr_spearman_magnitude: 0.8
+    nominal_rmse_ratio_range: [0.5, 2.0]
+  gate_b:
+    require_positive_aggregate_3d_gain: true
+    require_positive_aggregate_z_gain: true
 
 f7:
   test_sequences: [seq04, seq05, seq06, seq07, seq08, seq09, seq10, seq11]

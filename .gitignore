@@ -63,6 +63,8 @@ temp/
 data/*
 !data/README.md
 !data/.gitkeep
+!data/sionna_rt/
+!data/sionna_rt/**
 datasets/
 *.zip
 *.tar
@@ -92,4 +94,3 @@ Binaries/
 DerivedDataCache/
 Intermediate/
 Saved/
-
