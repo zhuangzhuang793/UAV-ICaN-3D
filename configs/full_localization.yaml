@@ -104,6 +104,17 @@ f3:
   monte_carlo_trials: 500
   coverage_confidence: 0.95
   selection_rule: gain_quantiles_with_spatial_diversity
+  parallel_workers: 4
+  optimizer:
+    max_function_evaluations: 250
+    gradient_tolerance: 1.0e-10
+    parameter_tolerance: 1.0e-10
+    cost_tolerance: 1.0e-10
+  gate:
+    minimum_improved_geometries: 6
+    minimum_gain_spearman: 0.0
+    nees_mean_range: [0.5, 8.0]
+    noncatastrophic_coverage_range: [0.75, 1.0]
 
 f4:
   rf_gate_confidence: 0.99

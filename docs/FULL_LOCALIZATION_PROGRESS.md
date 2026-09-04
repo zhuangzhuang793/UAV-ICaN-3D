@@ -1,6 +1,6 @@
 # FULL localization progress
 
-Current phase: **F3 — observation-level formal localization**
+Current phase: **F4 — formal target association experiment**
 
 ## Frozen scope
 
@@ -19,7 +19,8 @@ Current phase: **F3 — observation-level formal localization**
 - F0: **PASS** — 12 disjoint Cosys-AirSim sequences, 4800 synchronized frames
 - F1: **PASS** — C0 selected on independent validation pixel NLL
 - F2: **PASS** — formal shared-pose complementarity region preserved
-- F3–F10: not started
+- F3: **PASS** — nonlinear paired Monte Carlo agrees with EFIM trends
+- F4–F10: not started
 
 ## F0 frozen artifacts
 
@@ -46,6 +47,14 @@ Current phase: **F3 — observation-level formal localization**
 - Strong reference cells: `63/70`; robust cells at 0.5-degree attitude uncertainty: `70/70`
 - F3 representative geometries: 8 cells frozen by gain octile plus spatial-diversity rule
 - Decision: `docs/FULL_EFIM_STUDY.md`
+
+## F3 nonlinear MAP validation
+
+- Paired trials: `8 x 500 = 4000`
+- 3-D / Z improvement: `8/8 / 8/8` geometries
+- EFIM-to-empirical gain Spearman: `1.000` (3-D), `0.976` (Z)
+- RF / joint 95% coverage ranges: `93.6%–95.8% / 93.0%–96.2%`
+- Decision: `docs/FULL_OBSERVATION_LOCALIZATION.md`
 
 Formal outputs are isolated under `results/full_localization/`. Prediction, MPC and beam-control
 FULL experiments remain outside this workflow.
