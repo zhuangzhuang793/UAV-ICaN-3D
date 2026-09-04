@@ -1,6 +1,6 @@
 # FULL localization progress
 
-Current phase: **F6-A — Sionna LoS sanity check**
+Current phase: **F7 — pre-freeze audit complete; final test not yet opened**
 
 ## Frozen scope
 
@@ -22,7 +22,10 @@ Current phase: **F6-A — Sionna LoS sanity check**
 - F3: **PASS** — nonlinear paired Monte Carlo agrees with EFIM trends
 - F4: **PASS** — RF gating outperforms visual CV/Hungarian on Hard frames
 - F5-A: **PASS** — analytic waveform estimator improves monotonically with SNR
-- F6–F10: not started
+- F6-A: **PASS** — Sionna LoS trends agree with the analytic waveform model
+- F6-B: **PASS** — RF+Vision retains aggregate 3-D and Z gains under mild multipath
+- F7 pre-freeze leakage audit: **PASS**
+- F7–F10 final evaluation: not started
 
 ## F0 frozen artifacts
 
@@ -75,6 +78,17 @@ Current phase: **F6-A — Sionna LoS sanity check**
 - Aggregate 0 dB range / azimuth / elevation RMSE: `1.408 m / 0.734 deg / 0.711 deg`
 - Frozen empirical covariance retains all cross terms
 - Decision: `docs/FULL_ANALYTIC_WAVEFORM.md`
+
+## F6 Sionna RT integration
+
+- Sionna RT version: `2.0.1`
+- F6-A LoS paths: exactly `1` in all eight geometries
+- Nominal Sionna/analytic RMSE ratios: `0.957 / 0.986 / 1.031` for range/azimuth/elevation
+- F6-B paths: `3` per geometry, including `16` reflected paths in total
+- Mild-multipath RF-only / joint 3-D RMSE: `34.753 / 5.452 m`
+- Mild-multipath RF-only / joint Z-RMSE: `2.265 / 1.784 m`
+- Sionna path truth passed to online estimator: `false`
+- Decision: `docs/FULL_SIONNA_INTEGRATION.md`
 
 Formal outputs are isolated under `results/full_localization/`. Prediction, MPC and beam-control
 FULL experiments remain outside this workflow.

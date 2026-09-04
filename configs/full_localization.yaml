@@ -169,7 +169,13 @@ f6:
 f7:
   test_sequences: [seq04, seq05, seq06, seq07, seq08, seq09, seq10, seq11]
   rf_seeds: [20260971, 20260972, 20260973, 20260974, 20260975]
+  waveform_model: analytic_los
+  waveform_snr_db: 0.0
+  waveform_batch_size: 20
+  parallel_workers: 4
+  association_confidence: 0.99
   bootstrap_resamples: 10000
+  bootstrap_seed: 20260976
   bootstrap_unit: sequence
   coverage_confidence: 0.95
   primary_methods: [rf_only_full_3d, rf_vision_shared_pose]

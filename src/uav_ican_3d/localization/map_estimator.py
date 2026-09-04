@@ -68,6 +68,7 @@ def estimate_position_map(
     gradient_tolerance: float = 1e-10,
     parameter_tolerance: float = 1e-10,
     cost_tolerance: float = 1e-10,
+    rf_component_indices: tuple[int, ...] = (0, 1, 2),
 ) -> MAPEstimate:
     """Estimate target position and the single shared pose perturbation.
 
@@ -80,7 +81,13 @@ def estimate_position_map(
         value is None for value in camera_inputs
     ):
         raise ValueError("camera, transform_body_camera, and visual_observation are all-or-none")
-    rf_cholesky = _cholesky(rf_observation.covariance, 3, "RF covariance")
+    components = tuple(int(index) for index in rf_component_indices)
+    if not components or len(set(components)) != len(components) or any(
+        index not in (0, 1, 2) for index in components
+    ):
+        raise ValueError("rf_component_indices must be a nonempty unique subset of (0, 1, 2)")
+    rf_covariance = rf_observation.covariance[np.ix_(components, components)]
+    rf_cholesky = _cholesky(rf_covariance, len(components), "RF covariance")
     pose_cholesky = _cholesky(pose_covariance, 6, "pose covariance")
     camera_cholesky = (
         _cholesky(visual_observation.covariance, 2, "camera covariance")
@@ -106,18 +113,20 @@ def estimate_position_map(
         predicted_rf = predict_rf_observation(position, world_body.compose(transform_body_array))
         rf_residual = predicted_rf - rf_observation.vector
         rf_residual[1:] = wrap_angle(rf_residual[1:])
-        components = [np.linalg.solve(rf_cholesky, rf_residual)]
+        residual_components = [
+            np.linalg.solve(rf_cholesky, rf_residual[list(components)])
+        ]
         if visual_observation is not None:
             assert camera is not None and transform_body_camera is not None
             assert camera_cholesky is not None
             predicted_pixel = camera.project_world(
                 position, world_body.compose(transform_body_camera)
             )
-            components.append(
+            residual_components.append(
                 np.linalg.solve(camera_cholesky, predicted_pixel - visual_observation.pixel_uv)
             )
-        components.append(np.linalg.solve(pose_cholesky, pose_delta))
-        return np.concatenate(components)
+        residual_components.append(np.linalg.solve(pose_cholesky, pose_delta))
+        return np.concatenate(residual_components)
 
     solution = least_squares(
         residual,
@@ -147,3 +156,87 @@ def estimate_position_map(
         function_evaluations=int(solution.nfev),
     )
 
+
+def estimate_position_fixed_pose(
+    rf_observation: RFObservation,
+    transform_world_array: RigidTransform,
+    camera: PinholeCamera | None = None,
+    transform_world_camera: RigidTransform | None = None,
+    visual_observation: VisualObservation | None = None,
+    initial_position_world_m: ArrayLike | None = None,
+    max_function_evaluations: int = 250,
+    gradient_tolerance: float = 1e-10,
+    parameter_tolerance: float = 1e-10,
+    cost_tolerance: float = 1e-10,
+    rf_component_indices: tuple[int, ...] = (0, 1, 2),
+) -> MAPEstimate:
+    """Estimate position with platform pose fixed for the optimistic pose ablation."""
+
+    camera_inputs = (camera, transform_world_camera, visual_observation)
+    if any(value is not None for value in camera_inputs) and any(
+        value is None for value in camera_inputs
+    ):
+        raise ValueError("camera, transform_world_camera, and visual_observation are all-or-none")
+    components = tuple(int(index) for index in rf_component_indices)
+    if not components or len(set(components)) != len(components) or any(
+        index not in (0, 1, 2) for index in components
+    ):
+        raise ValueError("rf_component_indices must be a nonempty unique subset of (0, 1, 2)")
+    rf_covariance = rf_observation.covariance[np.ix_(components, components)]
+    rf_cholesky = _cholesky(rf_covariance, len(components), "RF covariance")
+    camera_cholesky = (
+        _cholesky(visual_observation.covariance, 2, "camera covariance")
+        if visual_observation is not None
+        else None
+    )
+    initial_position = (
+        position_from_rf_observation(rf_observation, transform_world_array)
+        if initial_position_world_m is None
+        else np.asarray(initial_position_world_m, dtype=float)
+    )
+    if initial_position.shape != (3,) or not np.all(np.isfinite(initial_position)):
+        raise ValueError("initial_position_world_m must be a finite vector with shape (3,)")
+
+    def residual(position: FloatArray) -> FloatArray:
+        predicted_rf = predict_rf_observation(position, transform_world_array)
+        rf_residual = predicted_rf - rf_observation.vector
+        rf_residual[1:] = wrap_angle(rf_residual[1:])
+        values = [np.linalg.solve(rf_cholesky, rf_residual[list(components)])]
+        if visual_observation is not None:
+            assert camera is not None and transform_world_camera is not None
+            assert camera_cholesky is not None
+            predicted_pixel = camera.project_world(position, transform_world_camera)
+            values.append(
+                np.linalg.solve(camera_cholesky, predicted_pixel - visual_observation.pixel_uv)
+            )
+        return np.concatenate(values)
+
+    solution = least_squares(
+        residual,
+        initial_position,
+        method="trf",
+        x_scale="jac",
+        max_nfev=max_function_evaluations,
+        gtol=gradient_tolerance,
+        xtol=parameter_tolerance,
+        ftol=cost_tolerance,
+    )
+    if not solution.success:
+        raise RuntimeError(f"fixed-pose MAP optimizer failed: {solution.message}")
+    normal_matrix = solution.jac.T @ solution.jac
+    eigenvalues = np.linalg.eigvalsh(normal_matrix)
+    if eigenvalues[0] <= eigenvalues[-1] * 1e-12:
+        raise RuntimeError(f"fixed-pose MAP local Hessian is singular: {eigenvalues.tolist()}")
+    position_covariance = np.linalg.solve(normal_matrix, np.eye(3))
+    position_covariance = 0.5 * (position_covariance + position_covariance.T)
+    joint_covariance = np.zeros((9, 9), dtype=float)
+    joint_covariance[:3, :3] = position_covariance
+    return MAPEstimate(
+        position_world_m=solution.x.copy(),
+        pose_delta=np.zeros(6),
+        joint_covariance=joint_covariance,
+        position_covariance=position_covariance,
+        cost=float(solution.cost),
+        optimality=float(solution.optimality),
+        function_evaluations=int(solution.nfev),
+    )
