@@ -1,8 +1,8 @@
 # UAV-ICaN 3D progress
 
-Current phase: Phase 5 — RF-guided visual target association
+Current phase: Phase 6 — real visual measurement and joint localization
 
-Gate result: BLOCKED
+Latest gate result: Phase 5 **PASS**
 
 Important outputs:
 
@@ -37,12 +37,17 @@ Important outputs:
   image covariance, preserving target/pose cross-correlation.
 - Chi-square Mahalanobis gating and the local VisDrone YOLO-label adapter are implemented. The
   adapter inspected 30 validation frames with 321 car/van/truck/bus candidates.
-- All 27 tests through the available Phase 5 components passed, but the formal GT-first Gate is
-  blocked because no independently synchronized pose/image/vehicle dataset or simulator exists.
-- See `docs/PHASE5_BLOCKER.md` and `data/README.md` for the blocker and required data contract.
+- Cosys-AirSim 3.4.1 / UE 5.8 runs headlessly on GPU 0 and exported 30 synchronized frames with
+  RGB, camera calibration/pose, three vehicle poses, and instance-segmentation GT boxes.
+- The served antenna phase center is independently computed from the vehicle pose and a fixed FRD
+  lever arm. Its projection falls inside the served GT box in all 30 frames.
+- Empirical true-UE pixel coverage was `1.000` for the target `0.950` confidence region. RF-guided
+  Mahalanobis association was `1.000`, versus `0.000` for the unguided image-center baseline.
+- Gate 5 passed and all 30 tests pass. See `docs/PHASE5_DECISION.md`,
+  `docs/COSYS_AIRSIM_SETUP.md`, and `results/phase5_association.csv`.
 
-Next phase: Stay in Phase 5. Provide a small synchronized dataset following `data/README.md`, or
-authorize setup of a compatible simulator. Phase 6 is forbidden until Gate 5 passes.
+Next phase: Replace GT candidates with a real pretrained vehicle detector/keypoint measurement,
+calibrate visual covariance, and feed it into the joint estimator as required by Phase 6.
 
 Reproducible quick-test command:
 

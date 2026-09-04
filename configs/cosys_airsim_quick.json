@@ -1,0 +1,64 @@
+{
+  "SettingsVersion": 2.0,
+  "SimMode": "Car",
+  "ViewMode": "NoDisplay",
+  "RpcEnabled": true,
+  "ApiServerPort": 41451,
+  "ClockSpeed": 1.0,
+  "InitialInstanceSegmentation": true,
+  "Vehicles": {
+    "ServedVehicle": {
+      "VehicleType": "PhysXCar",
+      "AutoCreate": true,
+      "X": 10.0,
+      "Y": 0.0,
+      "Z": 0.0,
+      "Yaw": 0.0,
+      "Cameras": {
+        "uav": {
+          "External": true,
+          "ExternalLocal": true,
+          "X": 0.0,
+          "Y": 0.0,
+          "Z": -30.0,
+          "Pitch": -90.0,
+          "Roll": 0.0,
+          "Yaw": 0.0,
+          "CaptureSettings": [
+            {
+              "ImageType": 0,
+              "Width": 640,
+              "Height": 480,
+              "FOV_Degrees": 90.0,
+              "MotionBlurAmount": 0.0,
+              "LumenGIEnable": false,
+              "LumenReflectionEnable": false
+            },
+            {
+              "ImageType": 5,
+              "Width": 640,
+              "Height": 480,
+              "FOV_Degrees": 90.0
+            }
+          ]
+        }
+      }
+    },
+    "DistractorA": {
+      "VehicleType": "PhysXCar",
+      "AutoCreate": true,
+      "X": 4.0,
+      "Y": 0.0,
+      "Z": 0.0,
+      "Yaw": 25.0
+    },
+    "DistractorB": {
+      "VehicleType": "PhysXCar",
+      "AutoCreate": true,
+      "X": 10.0,
+      "Y": -7.0,
+      "Z": 0.0,
+      "Yaw": -30.0
+    }
+  }
+}

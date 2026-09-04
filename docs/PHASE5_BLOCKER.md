@@ -1,18 +1,17 @@
-# Phase 5 blocker
+# Phase 5 blocker — resolved
 
-Status: **BLOCKED**
+Status: **RESOLVED**
 
 The RF image-belief projection and Mahalanobis association components passed their geometry smoke
 test. The local VisDrone adapter also read 30 frames containing
 321 car/van/truck/bus GT candidates.
 
-VisDrone cannot satisfy the Phase 5 GT-first gate because it has no synchronized UAV pose, camera
-pose/calibration, vehicle 3-D reference, UE antenna lever arm, or RF observation. No local
-AirSim/Cosys-AirSim scene or alternate synchronized dataset was found.
+VisDrone alone could not satisfy the Phase 5 GT-first gate because it has no synchronized UAV
+pose, camera pose/calibration, vehicle 3-D reference, UE antenna lever arm, or RF observation.
 
-Expected manifest: `data/synchronized_quick/manifest.jsonl`
+The blocker was resolved with a 30-frame Cosys-AirSim 3.4.1 / UE 5.8 synchronized export at
+`data/synchronized_quick/manifest.jsonl`. See `docs/PHASE5_DECISION.md` for the passing result and
+`docs/COSYS_AIRSIM_SETUP.md` for exact reproduction steps.
 
-Do not infer 3-D ground truth by selecting a VisDrone bbox and placing a synthetic vehicle on its
-back-projected ray. That would make the projection test circular. Provide a genuinely synchronized
-small scene following `data/README.md`, or authorize setup of a compatible simulator. Detector
-inference and Phase 6 must not begin before this gate is resolved.
+The export computes the antenna phase center from the simulator vehicle pose and a fixed lever arm;
+it does not infer 3-D truth by back-projecting a visual box. Phase 6 is now unblocked.

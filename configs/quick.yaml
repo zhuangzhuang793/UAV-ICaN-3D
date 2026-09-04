@@ -105,3 +105,12 @@ phase5:
   synchronized_manifest: data/synchronized_quick/manifest.jsonl
   gating_confidence: 0.95
   covariance_floor_px2: 1.0e-9
+  rf_range_std_m: 1.0
+  rf_aoa_std_deg: 2.0
+  pose_position_std_m: 0.20
+  pose_attitude_std_deg: 0.50
+  results_csv: results/phase5_association.csv
+  gate:
+    coverage_tolerance: 0.15
+    minimum_guided_association_rate: 0.80
+    minimum_guided_gain: 0.20
