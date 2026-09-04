@@ -1,8 +1,8 @@
 # UAV-ICaN 3D progress
 
-Current phase: Phase 10 — final end-to-end smoke test
+Workflow status: QUICK phases 0–10 complete
 
-Latest gate result: Phase 9 **PASS**
+Latest gate result: Phase 10 **PASS**
 
 Important outputs:
 
@@ -76,12 +76,21 @@ Important outputs:
 - Equivalent range/angle error fell from `14.590 m` through `8.881 m` to `0.986 m` over
   `-15/-5/5 dB`, and the nominal residuals supplied a full empirical RF covariance.
 - With that waveform covariance and temporal RF-gated real detections, a ten-frame subset reduced
-  3-D RMSE from `2.804 m` to `2.038 m` and Z-RMSE from `2.131 m` to `1.659 m`. Gate 9 passed; all
-  41 tests pass. See `docs/PHASE9_DECISION.md`, `results/phase9_waveform.csv`, and
+  3-D RMSE from `2.804 m` to `2.038 m` and Z-RMSE from `2.131 m` to `1.659 m`. Gate 9 passed. See
+  `docs/PHASE9_DECISION.md`, `results/phase9_waveform.csv`, and
   `results/phase9_pipeline.csv`.
+- The final eight-step loop connected SRS reception, waveform RF estimation, image-belief
+  projection, served association, joint localization, belief tracking, probabilistic prediction,
+  slow MPC, and 16 fast beam updates through timestamped interfaces.
+- Online modules received only complex waveforms, noisy visual candidates, nominal pose beliefs,
+  and previous estimates. Environment ground truth entered only post-output evaluation logging.
+- RF/joint localization RMSE was `3.030/2.464 m`; UAV motion was `10.000 m`, and the changed UAV
+  geometry affected later observations. All values and timestamps were finite and all constraints
+  held. Gate 10 passed; all 42 tests pass. See `docs/PHASE10_DECISION.md` and
+  `results/phase10_end_to_end.csv`.
 
-Next phase: Wire waveform reception, RF belief, real visual association, joint belief, prediction,
-slow MPC, and fast beam selection into one timestamped short closed loop without online GT input.
+Next: Stop at QUICK completion. Do not switch `mode: quick` to FULL or run publication-scale
+experiments until the user explicitly authorizes formal experimental design.
 
 Reproducible quick-test command:
 
@@ -106,4 +115,7 @@ PYTHONPATH=src .venv/bin/python experiments/run_phase8_gate.py --config configs/
 .venv/bin/python -m pytest -q tests/test_phase8_control.py
 PYTHONPATH=src .venv/bin/python experiments/run_phase9_gate.py --config configs/quick.yaml
 .venv/bin/python -m pytest -q tests/test_phase9_waveform.py
+PYTHONPATH=src .venv/bin/python experiments/run_phase10_gate.py --config configs/quick.yaml
+.venv/bin/python -m pytest -q tests/test_phase10_tracking.py
+.venv/bin/python -m pytest -q
 ```

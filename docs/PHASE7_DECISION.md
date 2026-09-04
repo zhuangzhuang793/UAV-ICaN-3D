@@ -9,7 +9,8 @@ an explicit kinematic covariance-propagation path; the ablation receives means o
 
 - Validation full / mean-only NLL: `0.4101 / 0.5828`
 - Full-model NLL gain: `0.1727`
-- Target / full / mean-only 3-D coverage: `0.900 / 0.890 / 0.899`
+- Target / full / mean-only 3-D coverage:
+  `0.900 / 0.890 / 0.899`
 - High/low input-covariance output-std ratio: `2.842`
 - Learned kinematic covariance scale: `0.0481`
 - Distribution change under the covariance intervention: `1.123`

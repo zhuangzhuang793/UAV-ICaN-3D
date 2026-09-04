@@ -297,6 +297,19 @@ def run(config_path: Path) -> None:
     )
     _write_csv(Path(phase["results_csv"]), rows)
     _write_csv(Path(phase["pipeline_results_csv"]), pipeline_rows)
+    Path(phase["calibration_json"]).write_text(
+        json.dumps(
+            {
+                "snr_db": nominal_snr,
+                "bias_range_azimuth_elevation": rf_bias.tolist(),
+                "covariance_range_azimuth_elevation": rf_covariance.tolist(),
+                "units": ["m", "rad", "rad"],
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
     snr_values = [float(value) for value in phase["snr_db"]]
     error_values = [metrics[value] for value in snr_values]
     high_low_improvement = (error_values[0] - error_values[-1]) / error_values[0]

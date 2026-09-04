@@ -200,7 +200,29 @@ phase9:
   detector_confidence_weight: 0.25
   results_csv: results/phase9_waveform.csv
   pipeline_results_csv: results/phase9_pipeline.csv
+  calibration_json: results/phase9_rf_calibration.json
   gate:
     minimum_high_low_error_improvement: 0.20
     minimum_pipeline_3d_rmse_gain: 0.02
     minimum_pipeline_z_rmse_gain: 0.02
+
+phase10:
+  waveform_calibration_json: results/phase9_rf_calibration.json
+  predictor_checkpoint: checkpoints/phase7_full.pt
+  episode_steps: 8
+  slow_dt_s: 0.5
+  fast_beam_updates_per_step: 2
+  waveform_snr_db: -5.0
+  pose_position_std_m: 0.20
+  pose_attitude_std_deg: 0.50
+  visual_covariance_px2: [[4.845, -0.040], [-0.040, 10.947]]
+  association_confidence: 0.99
+  trajectory_samples: 64
+  maximum_uav_speed_mps: 5.0
+  altitude_bounds_m: [30.0, 100.0]
+  results_csv: results/phase10_end_to_end.csv
+  gate:
+    minimum_associations: 6
+    minimum_predictions: 8
+    minimum_slow_updates: 8
+    minimum_fast_updates: 16
