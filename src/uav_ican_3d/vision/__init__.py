@@ -15,6 +15,12 @@ from .detector import (
     calibrate_bbox_center_to_ue_pixel,
     calibrated_box_centers,
 )
+from .formal_calibration import (
+    FrozenVisualCalibration,
+    fit_visual_calibrations,
+    mean_pixel_nll,
+    obb_viewpoint_features,
+)
 from .visdrone import VisDroneFrame, inspect_visdrone_split, load_visdrone_frame
 
 __all__ = [
@@ -32,4 +38,8 @@ __all__ = [
     "box_iou",
     "calibrate_bbox_center_to_ue_pixel",
     "calibrated_box_centers",
+    "FrozenVisualCalibration",
+    "fit_visual_calibrations",
+    "mean_pixel_nll",
+    "obb_viewpoint_features",
 ]

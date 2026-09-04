@@ -57,12 +57,16 @@ f0:
 f1:
   calibration_sequences: [seq00, seq01]
   validation_sequences: [seq02, seq03]
+  detector_device: 1
+  detector_image_size_px: 640
+  detector_batch_size: 64
   detector_confidence: 0.05
   detector_nms_iou: 0.30
   detector_vehicle_class_ids: [9, 10]
+  calibration_minimum_iou: 0.10
   covariance_floor_px2: 1.0
   c1_ridge_alpha: 1.0
-  selection_confidence: 0.95
+  negligible_nll_improvement: 0.01
 
 f2:
   altitude_m: [30, 45, 60, 75, 90, 105, 120]
