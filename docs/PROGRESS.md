@@ -1,6 +1,6 @@
 # UAV-ICaN 3D progress
 
-Current phase: Phase 2 — camera observation and shared-pose EFIM
+Current phase: Phase 3 — modality complementarity map
 
 Gate result: PASS
 
@@ -21,8 +21,14 @@ Important outputs:
 - Scaling shared pose covariance by four worsened joint PEB to `1.612477 m`.
 - Schur-complement and joint-marginal target covariances agreed to relative error `5.281e-16`;
   all 18 tests through Phase 2 passed.
+- The sparse QUICK scan evaluated 324 cells over 30–100 m altitude, 20–100 m horizontal distance,
+  three RF noise levels, and four nonzero attitude-uncertainty levels.
+- Thirty-one predeclared reasonable cells passed both 20% PEB and 20% ZEB gains, spanning all nine
+  geometries. Vision-only target information remained rank 2 throughout.
+- The decision report is `docs/PHASE3_DECISION.md`; the low-resolution map is
+  `docs/figures/phase3_complementarity_map.png`.
 
-Next phase: Phase 3 — modality complementarity map and research decision Gate.
+Next phase: Phase 4 — observation-level nonlinear MAP estimator.
 
 Reproducible quick-test command:
 
@@ -33,4 +39,6 @@ PYTHONPATH=src .venv/bin/python experiments/run_phase1_gate.py --config configs/
 .venv/bin/python -m pytest -q tests/test_phase1_rf_fim.py
 PYTHONPATH=src .venv/bin/python experiments/run_phase2_gate.py --config configs/quick.yaml
 .venv/bin/python -m pytest -q tests/test_phase2_shared_pose_efim.py
+PYTHONPATH=src .venv/bin/python experiments/run_phase3_gate.py --config configs/quick.yaml
+.venv/bin/python -m pytest -q tests/test_phase3_scan.py
 ```
