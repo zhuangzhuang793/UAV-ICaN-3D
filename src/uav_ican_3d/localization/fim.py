@@ -39,8 +39,8 @@ def fisher_information(jacobian: ArrayLike, measurement_covariance: ArrayLike) -
     """Compute ``H.T @ R^-1 @ H`` without explicitly inverting R."""
 
     matrix = np.asarray(jacobian, dtype=float)
-    if matrix.ndim != 2 or matrix.shape[1] != 3 or not np.all(np.isfinite(matrix)):
-        raise ValueError("jacobian must be a finite matrix with three columns")
+    if matrix.ndim != 2 or matrix.shape[1] == 0 or not np.all(np.isfinite(matrix)):
+        raise ValueError("jacobian must be a finite nonempty matrix")
     covariance = _symmetric_positive_definite(
         measurement_covariance, matrix.shape[0], "measurement_covariance"
     )
@@ -74,4 +74,3 @@ def position_bounds(
         zeb_m=float(np.sqrt(covariance[2, 2])),
         fim_condition_number=float(maximum / minimum),
     )
-

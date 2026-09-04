@@ -7,7 +7,7 @@ from dataclasses import dataclass
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
-from .transforms import RigidTransform
+from .transforms import RigidTransform, shared_sensor_relative_geometry
 
 
 FloatArray = NDArray[np.float64]
@@ -60,3 +60,37 @@ class PinholeCamera:
         point_camera = transform_world_camera.inverse().apply_point(point_world)
         return self.project_camera(point_camera)
 
+    def projection_jacobian(self, point_camera: ArrayLike) -> FloatArray:
+        """Jacobian of pixel projection with respect to a camera-frame point."""
+
+        point = np.asarray(point_camera, dtype=float)
+        if point.shape != (3,) or not np.all(np.isfinite(point)):
+            raise ValueError("point_camera must be a finite vector with shape (3,)")
+        x_coord, y_coord, depth = point
+        if depth <= 0.0:
+            raise ValueError("camera projection requires positive depth")
+        return np.array(
+            [
+                [self.fx_px / depth, 0.0, -self.fx_px * x_coord / depth**2],
+                [0.0, self.fy_px / depth, -self.fy_px * y_coord / depth**2],
+            ],
+            dtype=float,
+        )
+
+    def observation_and_shared_pose_jacobians(
+        self,
+        point_world: ArrayLike,
+        transform_world_body: RigidTransform,
+        transform_body_camera: RigidTransform,
+    ) -> tuple[FloatArray, FloatArray, FloatArray]:
+        """Return pixel prediction, ``H_cam,p``, and shared ``H_cam,xi``."""
+
+        point_camera, derivative_point, derivative_pose = shared_sensor_relative_geometry(
+            point_world, transform_world_body, transform_body_camera
+        )
+        projection_jacobian = self.projection_jacobian(point_camera)
+        return (
+            self.project_camera(point_camera),
+            projection_jacobian @ derivative_point,
+            projection_jacobian @ derivative_pose,
+        )

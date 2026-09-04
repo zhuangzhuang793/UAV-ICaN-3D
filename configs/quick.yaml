@@ -23,3 +23,23 @@ phase1:
     elevation_std_deg: 1.0
   increased_range_std_m: 1.00
   increased_aoa_std_deg: 2.0
+
+phase2:
+  finite_difference_step: 1.0e-6
+  jacobian_relative_tolerance: 2.0e-7
+  fim_rank_relative_tolerance: 1.0e-12
+  camera_noise_std_px: 2.0
+  lower_camera_noise_std_px: 1.0
+  pose_position_std_m: 0.20
+  pose_attitude_std_deg: 0.50
+  larger_pose_covariance_scale: 4.0
+  geometry:
+    uav_position_world_m: [0.0, 0.0, 50.0]
+    ue_position_world_m: [20.0, 5.0, 0.0]
+    # Body forward=east, right=south, down=world-down.
+    rotation_world_body: [[1.0, 0.0, 0.0], [0.0, -1.0, 0.0], [0.0, 0.0, -1.0]]
+    array_translation_body_m: [0.0, 0.0, 0.0]
+    array_rotation_body: [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
+    camera_translation_body_m: [0.30, 0.0, 0.10]
+    # Down-looking OpenCV camera: x_C->right_B, y_C->back_B, z_C->down_B.
+    camera_rotation_body: [[0.0, -1.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0]]

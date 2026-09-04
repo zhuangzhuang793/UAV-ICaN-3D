@@ -1,6 +1,6 @@
 # UAV-ICaN 3D progress
 
-Current phase: Phase 1 — RF 3-D observation and RF-only FIM
+Current phase: Phase 2 — camera observation and shared-pose EFIM
 
 Gate result: PASS
 
@@ -15,9 +15,14 @@ Important outputs:
   seeded observable geometries.
 - Representative PEB increased from `2.034711 m` to `2.211345 m` with higher range noise and to
   `3.976203 m` with higher AoA noise.
-- The array-axis singular geometry was explicitly detected; all 14 tests through Phase 1 passed.
+- Shared-pose/camera analytic Jacobians had worst relative finite-difference error `1.742e-9`.
+- Camera-off EFIM exactly matched RF-only. Representative RF-only and joint PEB were `1.354980 m`
+  and `0.950565 m`; lowering pixel noise improved joint PEB to `0.917249 m`.
+- Scaling shared pose covariance by four worsened joint PEB to `1.612477 m`.
+- Schur-complement and joint-marginal target covariances agreed to relative error `5.281e-16`;
+  all 18 tests through Phase 2 passed.
 
-Next phase: Phase 2 — camera observation and shared-pose EFIM.
+Next phase: Phase 3 — modality complementarity map and research decision Gate.
 
 Reproducible quick-test command:
 
@@ -26,4 +31,6 @@ PYTHONPATH=src .venv/bin/python experiments/run_phase0_gate.py --config configs/
 .venv/bin/python -m pytest -q tests/test_phase0_geometry.py
 PYTHONPATH=src .venv/bin/python experiments/run_phase1_gate.py --config configs/quick.yaml
 .venv/bin/python -m pytest -q tests/test_phase1_rf_fim.py
+PYTHONPATH=src .venv/bin/python experiments/run_phase2_gate.py --config configs/quick.yaml
+.venv/bin/python -m pytest -q tests/test_phase2_shared_pose_efim.py
 ```

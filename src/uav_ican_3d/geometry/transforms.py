@@ -35,6 +35,30 @@ def is_rotation_matrix(rotation: ArrayLike, atol: float = 1e-10) -> bool:
     )
 
 
+def skew(vector: ArrayLike) -> FloatArray:
+    """Return the cross-product matrix such that ``skew(a) @ b == a x b``."""
+
+    x_coord, y_coord, z_coord = _vector3(vector, "vector")
+    return np.array(
+        [[0.0, -z_coord, y_coord], [z_coord, 0.0, -x_coord], [-y_coord, x_coord, 0.0]],
+        dtype=float,
+    )
+
+
+def rotation_vector_to_matrix(rotation_vector: ArrayLike) -> FloatArray:
+    """SO(3) exponential map for a rotation vector in radians."""
+
+    vector = _vector3(rotation_vector, "rotation_vector")
+    angle = float(np.linalg.norm(vector))
+    if angle < 1e-12:
+        generator = skew(vector)
+        return np.eye(3) + generator + 0.5 * (generator @ generator)
+    axis_generator = skew(vector / angle)
+    return np.eye(3) + np.sin(angle) * axis_generator + (1.0 - np.cos(angle)) * (
+        axis_generator @ axis_generator
+    )
+
+
 @dataclass(frozen=True)
 class RigidTransform:
     """A rigid transform ``T_AB`` mapping points from frame B to frame A."""
@@ -77,3 +101,36 @@ class RigidTransform:
             self.rotation @ transform_bc.translation + self.translation,
         )
 
+
+def perturb_world_body(transform_world_body: RigidTransform, delta_xi: ArrayLike) -> RigidTransform:
+    """Apply the documented world-position/body-right attitude pose perturbation."""
+
+    perturbation = np.asarray(delta_xi, dtype=float)
+    if perturbation.shape != (6,) or not np.all(np.isfinite(perturbation)):
+        raise ValueError("delta_xi must be a finite vector with shape (6,)")
+    return RigidTransform(
+        transform_world_body.rotation @ rotation_vector_to_matrix(perturbation[3:]),
+        transform_world_body.translation + perturbation[:3],
+    )
+
+
+def shared_sensor_relative_geometry(
+    point_world: ArrayLike,
+    transform_world_body: RigidTransform,
+    transform_body_sensor: RigidTransform,
+) -> tuple[FloatArray, FloatArray, FloatArray]:
+    """Return sensor-relative point and its Jacobians wrt point and shared pose.
+
+    The pose Jacobian columns follow ``[delta_position_W, delta_rotation_B]``.
+    """
+
+    point = _vector3(point_world, "point_world")
+    rotation_body_world = transform_world_body.rotation.T
+    displacement_body = rotation_body_world @ (point - transform_world_body.translation)
+    rotation_sensor_body = transform_body_sensor.rotation.T
+    point_sensor = rotation_sensor_body @ (displacement_body - transform_body_sensor.translation)
+    derivative_point = rotation_sensor_body @ rotation_body_world
+    derivative_pose = np.column_stack(
+        (-derivative_point, rotation_sensor_body @ skew(displacement_body))
+    )
+    return point_sensor, derivative_point, derivative_pose
