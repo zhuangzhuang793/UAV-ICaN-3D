@@ -139,9 +139,14 @@ f5:
   subcarrier_spacing_hz: 480000.0
   snr_db: [-15, -10, -5, 0, 5, 10]
   waveform_realizations: 200
+  estimator_batch_size: 20
+  nominal_snr_db: 0
   range_grid_m: [10.0, 250.0, 0.1]
   azimuth_grid_deg: [-90.0, 90.0, 0.5]
-  elevation_grid_deg: [-45.0, 45.0, 0.5]
+  elevation_grid_deg: [-75.0, 75.0, 0.5]
+  gate:
+    minimum_error_snr_spearman_magnitude: 0.8
+    require_high_snr_better_than_low_snr: true
 
 f6:
   scene_asset: data/sionna_rt/full_localization_scene.xml

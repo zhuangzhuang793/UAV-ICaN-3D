@@ -1,6 +1,6 @@
 # FULL localization progress
 
-Current phase: **F5 — analytic LoS RF waveform fidelity**
+Current phase: **F6-A — Sionna LoS sanity check**
 
 ## Frozen scope
 
@@ -21,7 +21,8 @@ Current phase: **F5 — analytic LoS RF waveform fidelity**
 - F2: **PASS** — formal shared-pose complementarity region preserved
 - F3: **PASS** — nonlinear paired Monte Carlo agrees with EFIM trends
 - F4: **PASS** — RF gating outperforms visual CV/Hungarian on Hard frames
-- F5–F10: not started
+- F5-A: **PASS** — analytic waveform estimator improves monotonically with SNR
+- F6–F10: not started
 
 ## F0 frozen artifacts
 
@@ -65,6 +66,15 @@ Current phase: **F5 — analytic LoS RF waveform fidelity**
 - Oracle Easy / Hard accuracy: `99.92% / 98.19%`
 - F4 gate: PASS; F8 Hard target `>=90%`: **not met and preserved**
 - Decision: `docs/FULL_ASSOCIATION.md`
+
+## F5-A analytic waveform
+
+- Total waveforms: `8 x 6 x 200 = 9600`
+- SNR: `-15, -10, -5, 0, 5, 10 dB`
+- Error-versus-SNR Spearman: `-1.000` for range, azimuth and elevation RMSE
+- Aggregate 0 dB range / azimuth / elevation RMSE: `1.408 m / 0.734 deg / 0.711 deg`
+- Frozen empirical covariance retains all cross terms
+- Decision: `docs/FULL_ANALYTIC_WAVEFORM.md`
 
 Formal outputs are isolated under `results/full_localization/`. Prediction, MPC and beam-control
 FULL experiments remain outside this workflow.

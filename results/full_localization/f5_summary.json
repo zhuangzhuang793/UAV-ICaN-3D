@@ -1,0 +1,48 @@
+{
+  "estimator_online_inputs": [
+    "complex_received_waveform",
+    "known_reference"
+  ],
+  "estimator_source": "src/uav_ican_3d/localization/rf_waveform.py",
+  "estimator_source_sha256": "db492c8352809124806d0fa5c57dd762c41b28b38ac8972c8f4cdd99c8d768f2",
+  "geometries": 8,
+  "nominal_bias_range_azimuth_elevation": [
+    -0.03911597598816359,
+    -0.0005290529295107765,
+    -0.0002302983897001032
+  ],
+  "nominal_covariance_range_azimuth_elevation": [
+    [
+      1.9808613930690924,
+      4.68416430918154e-05,
+      6.138172052299136e-05
+    ],
+    [
+      4.68416430918154e-05,
+      0.00016407807612096417,
+      3.5231531342744933e-06
+    ],
+    [
+      6.138172052299136e-05,
+      3.5231531342744933e-06,
+      0.00015399366570775788
+    ]
+  ],
+  "nominal_snr_db": 0.0,
+  "snr_error_spearman": {
+    "azimuth_rmse_deg": -1.0,
+    "elevation_rmse_deg": -1.0,
+    "range_rmse_m": -1.0
+  },
+  "snr_levels": [
+    -15.0,
+    -10.0,
+    -5.0,
+    0.0,
+    5.0,
+    10.0
+  ],
+  "status": "PASS",
+  "total_waveforms": 9600,
+  "waveforms_per_cell_snr": 200
+}

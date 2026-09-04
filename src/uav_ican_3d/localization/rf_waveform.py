@@ -163,3 +163,41 @@ class WaveformRFEstimator:
             float(wrap_angle(self.angle_pairs[angle_index, 0])),
             float(self.angle_pairs[angle_index, 1]),
         )
+
+    def estimate_batch(self, received: ArrayLike) -> list[RFEstimate]:
+        """Vectorized equivalent of :meth:`estimate` for independent waveforms."""
+
+        samples = np.asarray(received, dtype=np.complex128)
+        antenna_count = self.config.upa_rows * self.config.upa_columns
+        expected_tail = (self.config.subcarrier_count, antenna_count)
+        if samples.ndim != 3 or samples.shape[1:] != expected_tail:
+            raise ValueError("received batch has wrong shape")
+        despread = samples[:, :, 0] * np.conj(self.reference)[None, :]
+        delay_scores = np.abs(self.delay_dictionary @ despread.T) ** 2
+        range_indices = np.argmax(delay_scores, axis=0)
+        ranges = self.range_grid_m[range_indices]
+        delays = ranges / SPEED_OF_LIGHT_MPS
+        compensation = np.exp(
+            1j
+            * 2.0
+            * np.pi
+            * delays[:, None]
+            * self.config.frequency_offsets_hz[None, :]
+        )
+        channels = np.mean(
+            samples
+            * np.conj(self.reference)[None, :, None]
+            * compensation[:, :, None],
+            axis=1,
+        )
+        angle_scores = np.abs(np.conj(self.spatial_dictionary) @ channels.T) ** 2
+        angle_indices = np.argmax(angle_scores, axis=0)
+        pairs = self.angle_pairs[angle_indices]
+        return [
+            RFEstimate(
+                float(ranges[index]),
+                float(wrap_angle(pairs[index, 0])),
+                float(pairs[index, 1]),
+            )
+            for index in range(samples.shape[0])
+        ]

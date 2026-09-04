@@ -37,3 +37,18 @@ def test_noiseless_like_waveform_recovers_delay_and_two_angles() -> None:
 def test_waveform_estimator_does_not_accept_ground_truth() -> None:
     estimator = _estimator()
     assert set(estimator.estimate.__annotations__) == {"received", "return"}
+
+
+def test_batch_estimator_matches_scalar_estimator() -> None:
+    config = SRSWaveformConfig()
+    rng = np.random.default_rng(8)
+    waveforms = np.stack(
+        [
+            simulate_los_srs(34.2, np.deg2rad(25.0), np.deg2rad(5.0), 20.0, config, rng)
+            for _ in range(3)
+        ]
+    )
+    estimator = _estimator()
+    scalar = [estimator.estimate(waveform).vector for waveform in waveforms]
+    batched = [estimate.vector for estimate in estimator.estimate_batch(waveforms)]
+    assert np.allclose(batched, scalar)
