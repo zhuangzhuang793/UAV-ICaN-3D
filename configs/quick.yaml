@@ -114,3 +114,28 @@ phase5:
     coverage_tolerance: 0.15
     minimum_guided_association_rate: 0.80
     minimum_guided_gain: 0.20
+
+phase6:
+  synchronized_manifest: data/synchronized_quick/manifest.jsonl
+  detector_model: yolo11n-obb.pt
+  detector_device: cpu
+  detector_image_size_px: 640
+  detector_confidence: 0.05
+  detector_nms_iou: 0.30
+  detector_vehicle_class_ids: [9, 10]
+  detector_cache: data/synchronized_quick/yolo11n_obb_detections.jsonl
+  calibration_frames: 10
+  evaluation_frames: 20
+  calibration_minimum_iou: 0.20
+  visual_covariance_floor_px2: 4.0
+  association_confidence: 0.99
+  rf_range_std_m: 1.0
+  rf_aoa_std_deg: 2.0
+  pose_position_std_m: 0.20
+  pose_attitude_std_deg: 0.50
+  results_csv: results/phase6_real_vision.csv
+  gate:
+    minimum_calibration_matches: 7
+    minimum_evaluation_visual_updates: 12
+    minimum_3d_rmse_gain: 0.05
+    minimum_z_rmse_gain: 0.02

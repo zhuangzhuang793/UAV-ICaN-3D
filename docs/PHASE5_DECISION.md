@@ -10,8 +10,8 @@ reference and a fixed FRD lever arm; it is not inferred by back-projecting a box
 - Target confidence: `0.950`
 - Empirical true-UE pixel coverage: `1.000`
 - Unguided image-center baseline association rate: `0.000`
-- RF-guided Mahalanobis association rate: `1.000`
-- Absolute guided gain: `1.000`
+- RF-guided Mahalanobis association rate: `0.967`
+- Absolute guided gain: `0.967`
 
 GT boxes are used as detector candidates in this gate. Candidate reference pixels remain the
 explicitly marked `TEMPORARY_APPROXIMATION` bbox centers; the independently projected antenna

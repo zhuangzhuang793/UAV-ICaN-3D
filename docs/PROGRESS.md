@@ -1,8 +1,8 @@
 # UAV-ICaN 3D progress
 
-Current phase: Phase 6 — real visual measurement and joint localization
+Current phase: Phase 7 — uncertainty-aware probabilistic prediction
 
-Latest gate result: Phase 5 **PASS**
+Latest gate result: Phase 6 **PASS**
 
 Important outputs:
 
@@ -41,13 +41,25 @@ Important outputs:
   RGB, camera calibration/pose, three vehicle poses, and instance-segmentation GT boxes.
 - The served antenna phase center is independently computed from the vehicle pose and a fixed FRD
   lever arm. Its projection falls inside the served GT box in all 30 frames.
-- Empirical true-UE pixel coverage was `1.000` for the target `0.950` confidence region. RF-guided
-  Mahalanobis association was `1.000`, versus `0.000` for the unguided image-center baseline.
-- Gate 5 passed and all 30 tests pass. See `docs/PHASE5_DECISION.md`,
+- Empirical true-UE pixel coverage was `1.000` for the target `0.950` confidence region. In the
+  final oblique-camera export, RF-guided GT association was `0.967`, versus `0.000` for the
+  unguided image-center baseline.
+- Gate 5 passed. See `docs/PHASE5_DECISION.md`,
   `docs/COSYS_AIRSIM_SETUP.md`, and `results/phase5_association.csv`.
+- A first COCO YOLO11n probe localized the simulator cars but mislabeled them as kites, so it was
+  rejected as a vehicle detector. YOLO11n-OBB pretrained on aerial DOTA was used instead, with its
+  native small/large-vehicle classes and no retraining.
+- Ten synchronized calibration frames produced bbox-center-to-antenna bias
+  `[-0.463, 3.827] px` and anisotropic residual covariance
+  `[[4.845, -0.040], [-0.040, 10.947]] px²`; detector confidence was not used as covariance.
+- On 20 held-out sequence frames, 19 real-vision updates and 18 correct RF-guided associations
+  reduced 3-D RMSE from `1.912 m` to `1.134 m` and Z-RMSE from `0.801 m` to `0.625 m`.
+- A deliberate far detector outlier was rejected before fusion with RF-only fallback. Gate 6
+  passed; all 32 tests pass. See `docs/PHASE6_DECISION.md` and
+  `results/phase6_real_vision.csv`.
 
-Next phase: Replace GT candidates with a real pretrained vehicle detector/keypoint measurement,
-calibrate visual covariance, and feed it into the joint estimator as required by Phase 6.
+Next phase: Build a lightweight probabilistic trajectory predictor that consumes belief mean and
+covariance histories, train only on a small straight/turning synthetic set, and run Gate 7.
 
 Reproducible quick-test command:
 
@@ -64,4 +76,6 @@ PYTHONPATH=src .venv/bin/python experiments/run_phase4_gate.py --config configs/
 .venv/bin/python -m pytest -q tests/test_phase4_map_estimator.py
 PYTHONPATH=src .venv/bin/python experiments/run_phase5_gate.py --config configs/quick.yaml
 .venv/bin/python -m pytest -q tests/test_phase5_association.py
+PYTHONPATH=src .venv/bin/python experiments/run_phase6_gate.py --config configs/quick.yaml
+.venv/bin/python -m pytest -q tests/test_phase6_detector_calibration.py
 ```

@@ -48,3 +48,12 @@ is preferred, but Vulkan offscreen rendering, RGB capture, segmentation, and RPC
 The packaged simulator crashed in `WorldSimApi::createNewBPActor` when dynamically spawning a car
 blueprint. The reproducible scene avoids that upstream path by declaring all three PhysX cars in
 the settings file at startup.
+
+The final synchronized export uses a `-60°` pitch instead of a nadir camera. The first nadir run
+passed association but provided almost no Z-axis improvement in Gate 6; the oblique geometry
+restores the visual/RF complementarity predicted in Phase 3.
+
+Phase 6 uses the official Ultralytics `yolo11n-obb.pt` DOTA aerial detector on CPU. The downloaded
+weight SHA-256 is `b62898ebf38940ca4df323863e45ee9d84a1a46d5d11ebdde529fb33aa9f3a32`.
+The installed PyTorch build is CUDA 13.0 while driver 570 exposes CUDA 12.8 compatibility, so
+PyTorch detector inference deliberately stays on CPU; this does not affect the UE Vulkan runtime.
