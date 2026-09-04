@@ -1,0 +1,33 @@
+{
+  "camera_covariance_uv_px2": [
+    [
+      2.9980587980412743,
+      -1.0095021178475656
+    ],
+    [
+      -1.0095021178475656,
+      2.3093853153280897
+    ]
+  ],
+  "evaluated_cells": 770,
+  "families": {
+    "pose_quality": 350,
+    "position_covariance_x4": 70,
+    "reference": 70,
+    "rf_quality_paired_levels": 280
+  },
+  "reference_cells": 70,
+  "reference_peb_gain_range": [
+    0.15072421706044875,
+    0.6535055787314247
+  ],
+  "reference_zeb_gain_range": [
+    0.05336810796151758,
+    0.7323513503278952
+  ],
+  "representative_protocol": "results/full_localization/f2_representative_geometries.json",
+  "robust_max_attitude_cells": 70,
+  "status": "PASS",
+  "strong_reference_cells": 63,
+  "visual_available_reference_cells": 70
+}

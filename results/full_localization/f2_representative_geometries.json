@@ -1,0 +1,68 @@
+{
+  "cells": [
+    {
+      "altitude_m": 30.0,
+      "cell_id": 0,
+      "f2_gain_peb": 0.15072421706044875,
+      "f2_gain_zeb": 0.06889601876293878,
+      "horizontal_distance_m": 20.0
+    },
+    {
+      "altitude_m": 105.0,
+      "cell_id": 1,
+      "f2_gain_peb": 0.46316818153102196,
+      "f2_gain_zeb": 0.31737088233378563,
+      "horizontal_distance_m": 60.0
+    },
+    {
+      "altitude_m": 60.0,
+      "cell_id": 2,
+      "f2_gain_peb": 0.4664573917209335,
+      "f2_gain_zeb": 0.5007284917821226,
+      "horizontal_distance_m": 80.0
+    },
+    {
+      "altitude_m": 30.0,
+      "cell_id": 3,
+      "f2_gain_peb": 0.5244594547830131,
+      "f2_gain_zeb": 0.6634080537387795,
+      "horizontal_distance_m": 100.0
+    },
+    {
+      "altitude_m": 120.0,
+      "cell_id": 4,
+      "f2_gain_peb": 0.563481553747167,
+      "f2_gain_zeb": 0.5937165974937556,
+      "horizontal_distance_m": 140.0
+    },
+    {
+      "altitude_m": 75.0,
+      "cell_id": 5,
+      "f2_gain_peb": 0.5966728273017986,
+      "f2_gain_zeb": 0.6617191422271061,
+      "horizontal_distance_m": 160.0
+    },
+    {
+      "altitude_m": 105.0,
+      "cell_id": 6,
+      "f2_gain_peb": 0.6147029948132954,
+      "f2_gain_zeb": 0.6662836799523214,
+      "horizontal_distance_m": 200.0
+    },
+    {
+      "altitude_m": 30.0,
+      "cell_id": 7,
+      "f2_gain_peb": 0.6535055787314247,
+      "f2_gain_zeb": 0.7323513503278952,
+      "horizontal_distance_m": 200.0
+    }
+  ],
+  "rf_parameters": {
+    "aoa_std_deg": 1.0,
+    "attitude_std_deg": 0.2,
+    "pose_position_std_m": 0.2,
+    "range_std_m": 1.0
+  },
+  "selection_rule": "one cell from each nominal PEB-gain octile; within each octile choose maximum normalized spatial separation from prior cells",
+  "status": "FROZEN_BEFORE_F3"
+}

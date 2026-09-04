@@ -1,6 +1,6 @@
 # FULL localization progress
 
-Current phase: **F2 — FULL theoretical EFIM study**
+Current phase: **F3 — observation-level formal localization**
 
 ## Frozen scope
 
@@ -18,7 +18,8 @@ Current phase: **F2 — FULL theoretical EFIM study**
 - R0: **PASS**
 - F0: **PASS** — 12 disjoint Cosys-AirSim sequences, 4800 synchronized frames
 - F1: **PASS** — C0 selected on independent validation pixel NLL
-- F2–F10: not started
+- F2: **PASS** — formal shared-pose complementarity region preserved
+- F3–F10: not started
 
 ## F0 frozen artifacts
 
@@ -37,6 +38,14 @@ Current phase: **F2 — FULL theoretical EFIM study**
 - C0 / C1 validation pixel NLL: `4.123548 / 8.876864`
 - Frozen pixel covariance: `[[2.998059, -1.009502], [-1.009502, 2.309385]]` px²
 - Full protocol: `docs/FULL_VISUAL_CALIBRATION.md`
+
+## F2 EFIM freeze
+
+- Evaluated cells: `770` across separate reference, RF-quality, pose-quality and position-sensitivity families
+- Nominal PEB / ZEB gain ranges: `15.07%–65.35% / 5.34%–73.24%`
+- Strong reference cells: `63/70`; robust cells at 0.5-degree attitude uncertainty: `70/70`
+- F3 representative geometries: 8 cells frozen by gain octile plus spatial-diversity rule
+- Decision: `docs/FULL_EFIM_STUDY.md`
 
 Formal outputs are isolated under `results/full_localization/`. Prediction, MPC and beam-control
 FULL experiments remain outside this workflow.

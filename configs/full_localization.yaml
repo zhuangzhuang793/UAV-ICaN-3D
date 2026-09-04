@@ -79,6 +79,25 @@ f2:
   nominal_attitude_std_deg: 0.2
   pose_position_std_m: 0.2
   position_covariance_sensitivity_scale: 4.0
+  camera:
+    width_px: 640
+    height_px: 480
+    fx_px: 320.0
+    fy_px: 320.0
+    cx_px: 320.0
+    cy_px: 240.0
+  camera_rotation_body:
+    [[0.0, -0.7071067811865476, 0.7071067811865476],
+     [1.0, 0.0, 0.0],
+     [0.0, 0.7071067811865476, 0.7071067811865476]]
+  gate:
+    minimum_reference_peb_gain: 0.10
+    minimum_reference_zeb_gain: 0.10
+    minimum_reference_cells: 8
+    minimum_robust_gain_at_max_attitude: 0.05
+    minimum_robust_cells_at_max_attitude: 4
+    minimum_altitudes_spanned: 3
+    minimum_distances_spanned: 3
 
 f3:
   representative_geometries: 8
