@@ -1,8 +1,8 @@
 # UAV-ICaN 3D progress
 
-Current phase: Phase 8 — slow trajectory control and fast beam control
+Current phase: Phase 9 — communication-waveform-level RF validation
 
-Latest gate result: Phase 7 **PASS**
+Latest gate result: Phase 8 **PASS**
 
 Important outputs:
 
@@ -64,9 +64,16 @@ Important outputs:
 - Scaling an otherwise fixed input covariance from low to high changed the predicted distribution
   and increased mean output standard deviation by `2.842x`. Gate 7 passed; all 35 tests pass. See
   `docs/PHASE7_DECISION.md` and `results/phase7_prediction.csv`.
+- A six-step slow closed loop consumed Kalman belief histories, sampled full predicted
+  trajectories, and produced feasible sampling-based robust-MPC actions; three fast 3-D beam
+  updates ran after every slow action.
+- The 4x4 UPA selector chose a narrow 4x4 beam for low angular uncertainty and a broader 2x2 taper
+  with a different elevation for the high-uncertainty probe. All 18 fast updates were finite and
+  every speed/altitude constraint held. Gate 8 passed; all 38 tests pass. See
+  `docs/PHASE8_DECISION.md` and `results/phase8_closed_loop.csv`.
 
-Next phase: Run one short two-timescale episode using the saved predictor checkpoint,
-sampling-based robust MPC, and a 4x4 UPA 3-D beam codebook.
+Next phase: Add a LoS 3.5 GHz SRS-like waveform, delay and 2-D AoA estimators for the same 4x4 UPA,
+calibrate RF covariance at a few SNRs, and rerun one small Phase 6 fusion case.
 
 Reproducible quick-test command:
 
@@ -87,4 +94,6 @@ PYTHONPATH=src .venv/bin/python experiments/run_phase6_gate.py --config configs/
 .venv/bin/python -m pytest -q tests/test_phase6_detector_calibration.py
 PYTHONPATH=src .venv/bin/python experiments/run_phase7_gate.py --config configs/quick.yaml
 .venv/bin/python -m pytest -q tests/test_phase7_prediction.py
+PYTHONPATH=src .venv/bin/python experiments/run_phase8_gate.py --config configs/quick.yaml
+.venv/bin/python -m pytest -q tests/test_phase8_control.py
 ```

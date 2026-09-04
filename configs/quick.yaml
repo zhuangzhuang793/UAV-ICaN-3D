@@ -157,3 +157,22 @@ phase7:
     minimum_high_low_std_ratio: 1.25
     minimum_nll_gain: 0.02
     coverage_tolerance: 0.20
+
+phase8:
+  predictor_checkpoint: checkpoints/phase7_full.pt
+  episode_steps: 6
+  slow_dt_s: 0.5
+  fast_beam_updates_per_step: 3
+  trajectory_samples: 64
+  maximum_uav_speed_mps: 5.0
+  altitude_bounds_m: [30.0, 100.0]
+  position_measurement_std_m: 0.5
+  azimuth_grid_deg: [-60, -45, -30, -15, 0, 15, 30, 45, 60]
+  elevation_grid_deg: [15, 30, 45, 60, 75]
+  beam_angle_samples: 256
+  beam_high_covariance_probe_scale: 5000.0
+  results_csv: results/phase8_closed_loop.csv
+  gate:
+    minimum_slow_updates: 6
+    minimum_fast_updates: 18
+    require_uncertainty_beam_change: true
