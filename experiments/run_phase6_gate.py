@@ -156,7 +156,7 @@ def run(
     detector_cache: Path | None = None,
     results_csv: Path | None = None,
     decision_path: Path = Path("docs/PHASE6_DECISION.md"),
-    detector_label: str = "YOLO11n-OBB pretrained on the aerial DOTA task",
+    detector_label: str | None = None,
 ) -> dict[str, float | int | bool]:
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     if config.get("mode") != "quick":
@@ -170,6 +170,12 @@ def run(
         phase["detector_cache"] = str(detector_cache)
     if results_csv is not None:
         phase["results_csv"] = str(results_csv)
+    if detector_label is None:
+        detector_label = (
+            f"Frozen YOLO11n-OBB checkpoint `{detector_model}`"
+            if detector_model is not None
+            else "YOLO11n-OBB pretrained on the aerial DOTA task"
+        )
     calibration_count = int(phase["calibration_frames"])
     evaluation_count = int(phase["evaluation_frames"])
     records = _load_manifest(

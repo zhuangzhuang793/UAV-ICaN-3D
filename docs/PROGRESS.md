@@ -4,6 +4,17 @@ Workflow status: QUICK phases 0–10 complete
 
 Latest gate result: Phase 10 **PASS**
 
+## Post-LoRA regression
+
+Post-LoRA regression: **PASS**
+
+- Detector: `checkpoints/phase6_lora_best.pt`
+- Phase 9: **PASS**
+- Phase 10: **PASS**
+- Frozen detector SHA-256:
+  `2c55ddd640fbb04c683b12e1126efb70cdbcb443bad39f1dff1c3df24ed3d541`
+- The QUICK configuration remained unchanged during the R0 rerun.
+
 Important outputs:
 
 - World ENU, body FRD, calibrated array, and OpenCV camera conventions are fixed in
