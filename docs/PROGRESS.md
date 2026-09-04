@@ -1,6 +1,6 @@
 # UAV-ICaN 3D progress
 
-Current phase: Phase 3 — modality complementarity map
+Current phase: Phase 4 — observation-level nonlinear MAP estimator
 
 Gate result: PASS
 
@@ -27,8 +27,15 @@ Important outputs:
   geometries. Vision-only target information remained rank 2 throughout.
 - The decision report is `docs/PHASE3_DECISION.md`; the low-resolution map is
   `docs/figures/phase3_complementarity_map.png`.
+- Nonlinear MAP jointly estimates UE position and the same six-dimensional shared UAV pose error;
+  its initializer uses only the RF observation.
+- Across three representative geometries with 30 trials each, RF+Vision 3-D RMSE was
+  `1.240/1.555/2.471 m`, versus RF-only `1.974/3.912/5.071 m`; Z-RMSE improved in every case.
+- Mean position NEES stayed between `2.166` and `3.435`, and every reported covariance was
+  positive definite. All 23 tests through Phase 4 passed.
 
-Next phase: Phase 4 — observation-level nonlinear MAP estimator.
+Next phase: Phase 5 — RF-guided visual target association. VisDrone is detector-only data; the
+GT-first geometry Gate requires a small synchronized pose/image/vehicle dataset.
 
 Reproducible quick-test command:
 
@@ -41,4 +48,6 @@ PYTHONPATH=src .venv/bin/python experiments/run_phase2_gate.py --config configs/
 .venv/bin/python -m pytest -q tests/test_phase2_shared_pose_efim.py
 PYTHONPATH=src .venv/bin/python experiments/run_phase3_gate.py --config configs/quick.yaml
 .venv/bin/python -m pytest -q tests/test_phase3_scan.py
+PYTHONPATH=src .venv/bin/python experiments/run_phase4_gate.py --config configs/quick.yaml
+.venv/bin/python -m pytest -q tests/test_phase4_map_estimator.py
 ```

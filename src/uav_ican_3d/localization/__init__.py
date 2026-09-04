@@ -2,6 +2,7 @@
 
 from .fim import PositionBounds, fisher_information, position_bounds
 from .joint_fim import equivalent_target_information, joint_target_pose_information
+from .map_estimator import MAPEstimate, estimate_position_map, position_from_rf_observation
 from .rf import (
     SingularGeometryError,
     predict_rf_observation,
@@ -12,11 +13,14 @@ from .rf import (
 
 __all__ = [
     "PositionBounds",
+    "MAPEstimate",
     "SingularGeometryError",
     "equivalent_target_information",
     "fisher_information",
+    "estimate_position_map",
     "joint_target_pose_information",
     "position_bounds",
+    "position_from_rf_observation",
     "predict_rf_observation",
     "rf_observation_and_shared_pose_jacobians",
     "rf_position_jacobian",

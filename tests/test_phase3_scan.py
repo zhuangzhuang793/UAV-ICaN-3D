@@ -24,4 +24,3 @@ def test_joint_information_cannot_worsen_crlb() -> None:
     result = _evaluate(_phase3_config(), 60.0, 60.0, 1.0, 2.0, 0.5)
     assert result.peb_joint_m <= result.peb_rf_m + 1e-12
     assert result.zeb_joint_m <= result.zeb_rf_m + 1e-12
-

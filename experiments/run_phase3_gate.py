@@ -15,7 +15,6 @@ os.environ.setdefault("MPLCONFIGDIR", "/tmp/uav_ican_mpl")
 os.environ.setdefault("XDG_CACHE_HOME", "/tmp/uav_ican_cache")
 import matplotlib.pyplot as plt
 
-from uav_ican_3d.geometry import PinholeCamera, RigidTransform
 from uav_ican_3d.localization import (
     equivalent_target_information,
     fisher_information,
@@ -23,6 +22,7 @@ from uav_ican_3d.localization import (
     position_bounds,
     rf_observation_and_shared_pose_jacobians,
 )
+from uav_ican_3d.simulation import complementarity_scene
 
 
 @dataclass(frozen=True)
@@ -41,33 +41,6 @@ class ScanResult:
     vision_only_rank: int
     pixel_u: float
     pixel_v: float
-
-
-def _scene(
-    phase: dict, altitude_m: float, horizontal_distance_m: float
-) -> tuple[np.ndarray, RigidTransform, RigidTransform, RigidTransform, PinholeCamera]:
-    target_world = np.array([horizontal_distance_m, 0.0, 0.0])
-    transform_world_body = RigidTransform(
-        np.diag([1.0, -1.0, -1.0]), np.array([0.0, 0.0, altitude_m])
-    )
-    transform_body_array = RigidTransform.identity()
-    transform_body_camera = RigidTransform(
-        np.asarray(phase["camera_rotation_body"], dtype=float), np.zeros(3)
-    )
-    camera_config = phase["camera"]
-    camera = PinholeCamera(
-        camera_config["fx_px"],
-        camera_config["fy_px"],
-        camera_config["cx_px"],
-        camera_config["cy_px"],
-    )
-    return (
-        target_world,
-        transform_world_body,
-        transform_body_array,
-        transform_body_camera,
-        camera,
-    )
 
 
 def _pose_covariance(phase: dict, attitude_std_deg: float) -> np.ndarray:
@@ -99,7 +72,7 @@ def _evaluate(
     aoa_std_deg: float,
     attitude_std_deg: float,
 ) -> ScanResult:
-    target, world_body, body_array, body_camera, camera = _scene(
+    target, world_body, body_array, body_camera, camera = complementarity_scene(
         phase, altitude_m, distance_m
     )
     _, rf_p, rf_xi = rf_observation_and_shared_pose_jacobians(

@@ -76,3 +76,23 @@ phase3:
     reasonable_max_aoa_std_deg: 2.0
     reasonable_min_attitude_std_deg: 0.5
     reasonable_max_attitude_std_deg: 1.0
+
+phase4:
+  monte_carlo_trials: 30
+  representative_geometries_m:
+    - [30.0, 20.0]
+    - [60.0, 60.0]
+    - [100.0, 100.0]
+  range_std_m: 1.0
+  aoa_std_deg: 2.0
+  camera_noise_std_px: 2.0
+  pose_position_std_m: 0.20
+  pose_attitude_std_deg: 0.50
+  optimizer:
+    max_function_evaluations: 250
+    gradient_tolerance: 1.0e-10
+    parameter_tolerance: 1.0e-10
+    cost_tolerance: 1.0e-10
+  gate:
+    nees_mean_min: 0.10
+    nees_mean_max: 30.0
