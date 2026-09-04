@@ -1,8 +1,8 @@
 # UAV-ICaN 3D progress
 
-Current phase: Phase 4 — observation-level nonlinear MAP estimator
+Current phase: Phase 5 — RF-guided visual target association
 
-Gate result: PASS
+Gate result: BLOCKED
 
 Important outputs:
 
@@ -33,9 +33,16 @@ Important outputs:
   `1.240/1.555/2.471 m`, versus RF-only `1.974/3.912/5.071 m`; Z-RMSE improved in every case.
 - Mean position NEES stayed between `2.166` and `3.435`, and every reported covariance was
   positive definite. All 23 tests through Phase 4 passed.
+- The RF estimator's complete 9-D target/shared-pose covariance is propagated into a full 2-D
+  image covariance, preserving target/pose cross-correlation.
+- Chi-square Mahalanobis gating and the local VisDrone YOLO-label adapter are implemented. The
+  adapter inspected 30 validation frames with 321 car/van/truck/bus candidates.
+- All 27 tests through the available Phase 5 components passed, but the formal GT-first Gate is
+  blocked because no independently synchronized pose/image/vehicle dataset or simulator exists.
+- See `docs/PHASE5_BLOCKER.md` and `data/README.md` for the blocker and required data contract.
 
-Next phase: Phase 5 — RF-guided visual target association. VisDrone is detector-only data; the
-GT-first geometry Gate requires a small synchronized pose/image/vehicle dataset.
+Next phase: Stay in Phase 5. Provide a small synchronized dataset following `data/README.md`, or
+authorize setup of a compatible simulator. Phase 6 is forbidden until Gate 5 passes.
 
 Reproducible quick-test command:
 
@@ -50,4 +57,6 @@ PYTHONPATH=src .venv/bin/python experiments/run_phase3_gate.py --config configs/
 .venv/bin/python -m pytest -q tests/test_phase3_scan.py
 PYTHONPATH=src .venv/bin/python experiments/run_phase4_gate.py --config configs/quick.yaml
 .venv/bin/python -m pytest -q tests/test_phase4_map_estimator.py
+PYTHONPATH=src .venv/bin/python experiments/run_phase5_gate.py --config configs/quick.yaml
+.venv/bin/python -m pytest -q tests/test_phase5_association.py
 ```
