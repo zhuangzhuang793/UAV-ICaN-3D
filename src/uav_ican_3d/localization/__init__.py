@@ -10,6 +10,15 @@ from .rf import (
     rf_position_jacobian,
     wrap_angle,
 )
+from .rf_waveform import (
+    RFEstimate,
+    SPEED_OF_LIGHT_MPS,
+    SRSWaveformConfig,
+    WaveformRFEstimator,
+    simulate_los_srs,
+    srs_reference,
+    upa_steering,
+)
 
 __all__ = [
     "PositionBounds",
@@ -25,4 +34,11 @@ __all__ = [
     "rf_observation_and_shared_pose_jacobians",
     "rf_position_jacobian",
     "wrap_angle",
+    "RFEstimate",
+    "SPEED_OF_LIGHT_MPS",
+    "SRSWaveformConfig",
+    "WaveformRFEstimator",
+    "simulate_los_srs",
+    "srs_reference",
+    "upa_steering",
 ]

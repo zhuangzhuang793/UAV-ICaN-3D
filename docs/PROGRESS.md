@@ -1,8 +1,8 @@
 # UAV-ICaN 3D progress
 
-Current phase: Phase 9 — communication-waveform-level RF validation
+Current phase: Phase 10 — final end-to-end smoke test
 
-Latest gate result: Phase 8 **PASS**
+Latest gate result: Phase 9 **PASS**
 
 Important outputs:
 
@@ -69,11 +69,19 @@ Important outputs:
   updates ran after every slow action.
 - The 4x4 UPA selector chose a narrow 4x4 beam for low angular uncertainty and a broader 2x2 taper
   with a different elevation for the high-uncertainty probe. All 18 fast updates were finite and
-  every speed/altitude constraint held. Gate 8 passed; all 38 tests pass. See
+  every speed/altitude constraint held. Gate 8 passed. See
   `docs/PHASE8_DECISION.md` and `results/phase8_closed_loop.csv`.
+- A known QPSK SRS-like uplink at 3.5 GHz drove independent grid-ML delay and 2-D AoA estimation
+  on the same 4x4 UPA. The estimator API receives only the complex waveform and reference.
+- Equivalent range/angle error fell from `14.590 m` through `8.881 m` to `0.986 m` over
+  `-15/-5/5 dB`, and the nominal residuals supplied a full empirical RF covariance.
+- With that waveform covariance and temporal RF-gated real detections, a ten-frame subset reduced
+  3-D RMSE from `2.804 m` to `2.038 m` and Z-RMSE from `2.131 m` to `1.659 m`. Gate 9 passed; all
+  41 tests pass. See `docs/PHASE9_DECISION.md`, `results/phase9_waveform.csv`, and
+  `results/phase9_pipeline.csv`.
 
-Next phase: Add a LoS 3.5 GHz SRS-like waveform, delay and 2-D AoA estimators for the same 4x4 UPA,
-calibrate RF covariance at a few SNRs, and rerun one small Phase 6 fusion case.
+Next phase: Wire waveform reception, RF belief, real visual association, joint belief, prediction,
+slow MPC, and fast beam selection into one timestamped short closed loop without online GT input.
 
 Reproducible quick-test command:
 
@@ -96,4 +104,6 @@ PYTHONPATH=src .venv/bin/python experiments/run_phase7_gate.py --config configs/
 .venv/bin/python -m pytest -q tests/test_phase7_prediction.py
 PYTHONPATH=src .venv/bin/python experiments/run_phase8_gate.py --config configs/quick.yaml
 .venv/bin/python -m pytest -q tests/test_phase8_control.py
+PYTHONPATH=src .venv/bin/python experiments/run_phase9_gate.py --config configs/quick.yaml
+.venv/bin/python -m pytest -q tests/test_phase9_waveform.py
 ```

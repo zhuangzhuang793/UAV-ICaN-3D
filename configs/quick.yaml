@@ -176,3 +176,31 @@ phase8:
     minimum_slow_updates: 6
     minimum_fast_updates: 18
     require_uncertainty_beam_change: true
+
+phase9:
+  carrier_hz: 3.5e9
+  subcarrier_count: 32
+  subcarrier_spacing_hz: 480000.0
+  upa_shape: [4, 4]
+  snr_db: [-15.0, -5.0, 5.0]
+  nominal_snr_db: -5.0
+  monte_carlo_trials: 30
+  calibration_truth:
+    range_m: 34.2
+    azimuth_deg: 25.0
+    elevation_deg: 5.0
+  range_grid_m: [20.0, 60.0, 0.1]
+  azimuth_grid_deg: [-45.0, 45.0, 0.5]
+  elevation_grid_deg: [-20.0, 30.0, 0.5]
+  covariance_floor:
+    range_std_m: 0.05
+    angle_std_deg: 0.10
+  pipeline_evaluation_frames: 10
+  temporal_association_std_px: 8.0
+  detector_confidence_weight: 0.25
+  results_csv: results/phase9_waveform.csv
+  pipeline_results_csv: results/phase9_pipeline.csv
+  gate:
+    minimum_high_low_error_improvement: 0.20
+    minimum_pipeline_3d_rmse_gain: 0.02
+    minimum_pipeline_z_rmse_gain: 0.02
