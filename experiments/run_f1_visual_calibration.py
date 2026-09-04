@@ -50,43 +50,48 @@ def _run_detector(records: list[dict], config: dict, cache_path: Path) -> list[d
     phase = config["f1"]
     checkpoint = Path(config["f0"]["detector"]["merged_checkpoint"])
     model = YOLO(str(checkpoint))
-    predictions = model.predict(
-        source=[record["image_path"] for record in records],
-        device=str(phase["detector_device"]),
-        imgsz=int(phase["detector_image_size_px"]),
-        batch=int(phase["detector_batch_size"]),
-        conf=float(phase["detector_confidence"]),
-        iou=float(phase["detector_nms_iou"]),
-        classes=[int(value) for value in phase["detector_vehicle_class_ids"]],
-        agnostic_nms=True,
-        verbose=False,
-        stream=True,
-    )
     cache_path.parent.mkdir(parents=True, exist_ok=True)
     detections: list[dict] = []
+    batch_size = int(phase["detector_batch_size"])
+    if batch_size <= 0:
+        raise ValueError("detector_batch_size must be positive")
     with cache_path.open("w", encoding="utf-8") as destination:
-        for record, prediction in zip(records, predictions, strict=True):
-            if prediction.obb is None:
-                boxes_xyxy = np.empty((0, 4), dtype=float)
-                boxes_xywhr = np.empty((0, 5), dtype=float)
-                classes = np.empty(0, dtype=int)
-                confidence = np.empty(0, dtype=float)
-            else:
-                boxes_xyxy = prediction.obb.xyxy.cpu().numpy().astype(float)
-                boxes_xywhr = prediction.obb.xywhr.cpu().numpy().astype(float)
-                classes = prediction.obb.cls.cpu().numpy().astype(int)
-                confidence = prediction.obb.conf.cpu().numpy().astype(float)
-            item = {
-                "sequence_id": record["sequence_id"],
-                "frame_index": record["frame_index"],
-                "timestamp_s": record["timestamp_s"],
-                "boxes_xyxy": boxes_xyxy.tolist(),
-                "boxes_xywhr": boxes_xywhr.tolist(),
-                "class_ids": classes.tolist(),
-                "confidences": confidence.tolist(),
-            }
-            destination.write(json.dumps(item, separators=(",", ":")) + "\n")
-            detections.append(item)
+        for start in range(0, len(records), batch_size):
+            record_batch = records[start : start + batch_size]
+            predictions = model.predict(
+                source=[record["image_path"] for record in record_batch],
+                device=str(phase["detector_device"]),
+                imgsz=int(phase["detector_image_size_px"]),
+                batch=batch_size,
+                conf=float(phase["detector_confidence"]),
+                iou=float(phase["detector_nms_iou"]),
+                classes=[int(value) for value in phase["detector_vehicle_class_ids"]],
+                agnostic_nms=True,
+                verbose=False,
+                stream=False,
+            )
+            for record, prediction in zip(record_batch, predictions, strict=True):
+                if prediction.obb is None:
+                    boxes_xyxy = np.empty((0, 4), dtype=float)
+                    boxes_xywhr = np.empty((0, 5), dtype=float)
+                    classes = np.empty(0, dtype=int)
+                    confidence = np.empty(0, dtype=float)
+                else:
+                    boxes_xyxy = prediction.obb.xyxy.cpu().numpy().astype(float)
+                    boxes_xywhr = prediction.obb.xywhr.cpu().numpy().astype(float)
+                    classes = prediction.obb.cls.cpu().numpy().astype(int)
+                    confidence = prediction.obb.conf.cpu().numpy().astype(float)
+                item = {
+                    "sequence_id": record["sequence_id"],
+                    "frame_index": record["frame_index"],
+                    "timestamp_s": record["timestamp_s"],
+                    "boxes_xyxy": boxes_xyxy.tolist(),
+                    "boxes_xywhr": boxes_xywhr.tolist(),
+                    "class_ids": classes.tolist(),
+                    "confidences": confidence.tolist(),
+                }
+                destination.write(json.dumps(item, separators=(",", ":")) + "\n")
+                detections.append(item)
     return detections
 
 

@@ -1,0 +1,18 @@
+{
+  "detector_cache_sha256": "9e5e521177b56f17abda382bc006db55ac946910bb47971d541cb05b5112d700",
+  "easy_frames": 2538,
+  "frames": 3200,
+  "hard_frames": 662,
+  "incorrect_proposed_associations": 142,
+  "online_gt_fields": [],
+  "oracle_easy_accuracy": 0.9992119779353822,
+  "oracle_hard_accuracy": 0.9818731117824774,
+  "proposed_easy_accuracy": 0.9791174152876281,
+  "proposed_hard_accuracy": 0.8655589123867069,
+  "proposed_visual_update_rate": 0.98375,
+  "status": "PASS",
+  "subset_freeze_sha256": "6a51776cb40ab25b5e7eb95712d4430bd4d678e0987ce79d428cfe31fa301952",
+  "subset_rule": "nonserved_candidate_inside_rf_gate",
+  "visual_easy_accuracy": 0.152876280535855,
+  "visual_hard_accuracy": 0.07250755287009064
+}

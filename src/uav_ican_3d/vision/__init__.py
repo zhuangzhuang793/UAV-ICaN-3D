@@ -22,6 +22,7 @@ from .formal_calibration import (
     obb_viewpoint_features,
 )
 from .visdrone import VisDroneFrame, inspect_visdrone_split, load_visdrone_frame
+from .tracking import ImageCVHungarianTracker
 
 __all__ = [
     "AssociationResult",
@@ -42,4 +43,5 @@ __all__ = [
     "fit_visual_calibrations",
     "mean_pixel_nll",
     "obb_viewpoint_features",
+    "ImageCVHungarianTracker",
 ]

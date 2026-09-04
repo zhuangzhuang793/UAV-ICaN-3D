@@ -1,6 +1,6 @@
 # FULL localization progress
 
-Current phase: **F4 — formal target association experiment**
+Current phase: **F5 — analytic LoS RF waveform fidelity**
 
 ## Frozen scope
 
@@ -20,7 +20,8 @@ Current phase: **F4 — formal target association experiment**
 - F1: **PASS** — C0 selected on independent validation pixel NLL
 - F2: **PASS** — formal shared-pose complementarity region preserved
 - F3: **PASS** — nonlinear paired Monte Carlo agrees with EFIM trends
-- F4–F10: not started
+- F4: **PASS** — RF gating outperforms visual CV/Hungarian on Hard frames
+- F5–F10: not started
 
 ## F0 frozen artifacts
 
@@ -55,6 +56,15 @@ Current phase: **F4 — formal target association experiment**
 - EFIM-to-empirical gain Spearman: `1.000` (3-D), `0.976` (Z)
 - RF / joint 95% coverage ranges: `93.6%–95.8% / 93.0%–96.2%`
 - Decision: `docs/FULL_OBSERVATION_LOCALIZATION.md`
+
+## F4 association freeze
+
+- Easy / Hard frames: `2538 / 662`, frozen before correctness evaluation
+- Visual-only Easy / Hard accuracy: `15.29% / 7.25%`
+- RF-guided Easy / Hard accuracy: `97.91% / 86.56%`
+- Oracle Easy / Hard accuracy: `99.92% / 98.19%`
+- F4 gate: PASS; F8 Hard target `>=90%`: **not met and preserved**
+- Decision: `docs/FULL_ASSOCIATION.md`
 
 Formal outputs are isolated under `results/full_localization/`. Prediction, MPC and beam-control
 FULL experiments remain outside this workflow.

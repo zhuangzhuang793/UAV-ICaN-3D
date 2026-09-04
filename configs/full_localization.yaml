@@ -117,9 +117,20 @@ f3:
     noncatastrophic_coverage_range: [0.75, 1.0]
 
 f4:
+  detector_device: 2
+  detector_batch_size: 8
   rf_gate_confidence: 0.99
+  rf_seed: 20260944
+  rf_range_std_m: 1.0
+  rf_aoa_std_deg: 1.0
+  pose_position_std_m: 0.2
+  pose_attitude_std_deg: 0.2
   visual_tracker_process_std_px: 3.0
+  visual_tracker_measurement_std_px: 2.0
+  visual_tracker_gate_confidence: 0.99
+  visual_tracker_max_missed_frames: 5
   hard_subset_rule: nonserved_candidate_inside_rf_gate
+  subset_candidate_minimum_iou: 0.10
   gate:
     require_hard_rf_accuracy_above_visual: true
 
