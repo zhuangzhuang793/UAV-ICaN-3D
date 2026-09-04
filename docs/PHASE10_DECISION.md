@@ -9,9 +9,11 @@ probabilistic trajectory prediction, slow robust MPC, and fast 3-D UPA beam sele
 - Waveform/localization/prediction/slow-control steps: `8`
 - Successful visual associations: `8/8`
 - Fast beam updates: `16`
-- RF / joint localization RMSE: `3.030 / 2.464` m
+- RF / joint localization RMSE: `3.030 / 2.466` m
+- Visual covariance source: `phase6_lora_calibration`
+- Visual covariance: `[[4.570583054924847, 0.5910402178258557], [0.5910402178258557, 7.737659849363675]]` px^2
 - Mean logged prediction uncertainty:
-  `2.506` m
+  `2.496` m
 - Nominal UAV motion: `10.000` m
 - New geometry changed later observations: `True`
 - All timestamps/values finite and constraints satisfied: `True`

@@ -146,7 +146,8 @@ def _pipeline_subset(
     calibration_count = int(phase6["calibration_frames"])
     evaluation_count = int(phase9["pipeline_evaluation_frames"])
     records = _load_json_lines(Path(phase6["synchronized_manifest"]))
-    detections = _load_json_lines(Path(phase6["detector_cache"]))
+    detector_cache = Path(phase9.get("detector_cache", phase6["detector_cache"]))
+    detections = _load_json_lines(detector_cache)
     calibration = calibrate_bbox_center_to_ue_pixel(
         [np.asarray(item["boxes_xyxy"]).reshape(-1, 4) for item in detections[:calibration_count]],
         [record["served_gt_box_xyxy"] for record in records[:calibration_count]],
@@ -324,6 +325,7 @@ def run(config_path: Path) -> None:
         and gain_z >= float(gate["minimum_pipeline_z_rmse_gain"])
     )
     status = "PASS" if passed else "FAIL"
+    detector_cache = Path(phase.get("detector_cache", config["phase6"]["detector_cache"]))
     Path("docs/PHASE9_DECISION.md").write_text(
         f"""# Phase 9 decision
 
@@ -341,9 +343,10 @@ path values enter only the channel simulator and evaluation residuals, never the
 - Waveform RF-only / RF+real-Vision 3-D RMSE: `{rf_rmse:.3f} / {fused_rmse:.3f}` m
 - Waveform RF-only / RF+real-Vision Z-RMSE: `{rf_z_rmse:.3f} / {fused_z_rmse:.3f}` m
 - Pipeline relative 3-D / Z gains: `{gain_3d:.3f} / {gain_z:.3f}`
+- Detector cache: `{detector_cache}`
 
 The empirical waveform-estimator covariance replaces the hand-set RF covariance in the pipeline
-subset. The visual inputs are cached real YOLO11n-OBB detections from Phase 6.
+subset. The visual inputs are cached real VisDrone-LoRA YOLO11n-OBB detections from Phase 6.
 """,
         encoding="utf-8",
     )

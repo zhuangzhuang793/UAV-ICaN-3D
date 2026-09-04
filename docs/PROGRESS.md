@@ -83,8 +83,8 @@ Important outputs:
   on the same 4x4 UPA. The estimator API receives only the complex waveform and reference.
 - Equivalent range/angle error fell from `14.590 m` through `8.881 m` to `0.986 m` over
   `-15/-5/5 dB`, and the nominal residuals supplied a full empirical RF covariance.
-- With that waveform covariance and temporal RF-gated real detections, a ten-frame subset reduced
-  3-D RMSE from `2.804 m` to `2.038 m` and Z-RMSE from `2.131 m` to `1.659 m`. Gate 9 passed. See
+- With that waveform covariance and temporal RF-gated LoRA detections, a ten-frame subset reduced
+  3-D RMSE from `2.804 m` to `2.033 m` and Z-RMSE from `2.131 m` to `1.653 m`. Gate 9 passed. See
   `docs/PHASE9_DECISION.md`, `results/phase9_waveform.csv`, and
   `results/phase9_pipeline.csv`.
 - The final eight-step loop connected SRS reception, waveform RF estimation, image-belief
@@ -92,9 +92,10 @@ Important outputs:
   slow MPC, and 16 fast beam updates through timestamped interfaces.
 - Online modules received only complex waveforms, noisy visual candidates, nominal pose beliefs,
   and previous estimates. Environment ground truth entered only post-output evaluation logging.
-- RF/joint localization RMSE was `3.030/2.464 m`; UAV motion was `10.000 m`, and the changed UAV
+- RF/joint localization RMSE was `3.030/2.466 m`; UAV motion was `10.000 m`, and the changed UAV
   geometry affected later observations. All values and timestamps were finite and all constraints
-  held. Gate 10 passed; all 42 tests pass. See `docs/PHASE10_DECISION.md` and
+  held. Gate 10 passed; all 44 tests pass. The downstream LoRA regression is recorded in
+  `docs/LORA_DOWNSTREAM_REGRESSION.md`. See `docs/PHASE10_DECISION.md` and
   `results/phase10_end_to_end.csv`.
 
 Next: Stop at QUICK completion. Do not switch `mode: quick` to FULL or run publication-scale

@@ -390,6 +390,8 @@ probabilistic trajectory prediction, slow robust MPC, and fast 3-D UPA beam sele
 - Successful visual associations: `{associations}/{slow_updates}`
 - Fast beam updates: `{fast_updates}`
 - RF / joint localization RMSE: `{rf_rmse:.3f} / {joint_rmse:.3f}` m
+- Visual covariance source: `{phase.get('visual_covariance_source', 'unspecified')}`
+- Visual covariance: `{visual_covariance.tolist()}` px^2
 - Mean logged prediction uncertainty:
   `{np.mean([row['prediction_uncertainty_m'] for row in rows]):.3f}` m
 - Nominal UAV motion: `{uav_motion:.3f}` m

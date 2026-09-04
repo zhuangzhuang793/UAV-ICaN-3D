@@ -199,6 +199,7 @@ phase8:
     require_uncertainty_beam_change: true
 
 phase9:
+  detector_cache: data/synchronized_quick/yolo11n_obb_lora_detections.jsonl
   carrier_hz: 3.5e9
   subcarrier_count: 32
   subcarrier_spacing_hz: 480000.0
@@ -230,13 +231,14 @@ phase9:
 phase10:
   waveform_calibration_json: results/phase9_rf_calibration.json
   predictor_checkpoint: checkpoints/phase7_full.pt
+  visual_covariance_source: phase6_lora_calibration
   episode_steps: 8
   slow_dt_s: 0.5
   fast_beam_updates_per_step: 2
   waveform_snr_db: -5.0
   pose_position_std_m: 0.20
   pose_attitude_std_deg: 0.50
-  visual_covariance_px2: [[4.845, -0.040], [-0.040, 10.947]]
+  visual_covariance_px2: [[4.570583054924847, 0.5910402178258557], [0.5910402178258557, 7.737659849363675]]
   association_confidence: 0.99
   trajectory_samples: 64
   maximum_uav_speed_mps: 5.0
