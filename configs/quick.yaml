@@ -11,3 +11,15 @@ phase0:
     cx_px: 320.0
     cy_px: 240.0
 
+phase1:
+  random_trials: 8
+  finite_difference_step_m: 1.0e-5
+  jacobian_relative_tolerance: 1.0e-8
+  geometry_tolerance_m: 1.0e-9
+  fim_rank_relative_tolerance: 1.0e-12
+  nominal_noise:
+    range_std_m: 0.50
+    azimuth_std_deg: 1.0
+    elevation_std_deg: 1.0
+  increased_range_std_m: 1.00
+  increased_aoa_std_deg: 2.0

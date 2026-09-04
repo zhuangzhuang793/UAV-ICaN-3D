@@ -31,6 +31,18 @@ extrinsics are `T_BC` and `T_BA`, so `T_WC = T_WB T_BC` and `T_WA = T_WB T_BA`.
 All internal angles are radians. Configuration values explicitly suffixed `_deg` must be converted
 at the configuration boundary and must not enter geometry or estimation APIs unchanged.
 
+## RF angle convention
+
+For relative UE position `q_A = [x_A, y_A, z_A]` in the calibrated array frame:
+
+```text
+azimuth   = atan2(y_A, x_A)
+elevation = atan2(z_A, sqrt(x_A^2 + y_A^2))
+```
+
+Azimuth and elevation lie in `[-pi, pi]` and `[-pi/2, pi/2]`, respectively. Elevation is not a
+3GPP zenith angle. A 3GPP interface must convert zenith to this convention at its boundary.
+
 ## Shared UAV pose perturbation
 
 The shared nuisance state has ordering:
@@ -49,4 +61,3 @@ p_WB(delta_xi) = p_WB_nominal + delta_p_W
 
 RF AoA and camera bearing use this same `delta_xi` and the same pose prior. Separate synthetic
 attitude noises must never be used as a substitute for this shared nuisance state.
-
