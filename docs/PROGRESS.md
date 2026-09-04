@@ -57,6 +57,14 @@ Important outputs:
 - A deliberate far detector outlier was rejected before fusion with RF-only fallback. Gate 6
   passed. See `docs/PHASE6_DECISION.md` and
   `results/phase6_real_vision.csv`.
+- A post-gate QUICK LoRA sweep adapted 50 neck/head convolutions of YOLO11n-OBB on 25% of the
+  local VisDrone training split while freezing the backbone and BN statistics. Of three tested
+  configurations, rank 4 / alpha 8 / dropout 0.05 / LR 1e-3 won on the complete held-out
+  VisDrone validation split (`mAP50-95 0.160`, versus `0.028` without adaptation).
+- The merged LoRA winner produced 20/20 visual updates and 19/20 correct associations, reducing
+  Gate 6 3-D RMSE to `0.988 m` and Z-RMSE to `0.589 m`. See
+  `docs/PHASE6_LORA_DECISION.md`, `results/phase6_lora_sweep.csv`, and
+  `results/phase6_lora_real_vision.csv`.
 - A 64-hidden-unit Gaussian predictor was quick-trained for 60 epochs (about eight seconds) on 600
   synthetic belief histories split evenly between straight and constant-turn motion.
 - The full covariance-aware model achieved validation NLL `0.4101` versus `0.5828` for mean-only;
@@ -109,6 +117,8 @@ PYTHONPATH=src .venv/bin/python experiments/run_phase5_gate.py --config configs/
 .venv/bin/python -m pytest -q tests/test_phase5_association.py
 PYTHONPATH=src .venv/bin/python experiments/run_phase6_gate.py --config configs/quick.yaml
 .venv/bin/python -m pytest -q tests/test_phase6_detector_calibration.py
+PYTHONPATH=src .venv/bin/python experiments/run_phase6_lora_sweep.py --config configs/quick.yaml
+.venv/bin/python -m pytest -q tests/test_phase6_lora.py
 PYTHONPATH=src .venv/bin/python experiments/run_phase7_gate.py --config configs/quick.yaml
 .venv/bin/python -m pytest -q tests/test_phase7_prediction.py
 PYTHONPATH=src .venv/bin/python experiments/run_phase8_gate.py --config configs/quick.yaml

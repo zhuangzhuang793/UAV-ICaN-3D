@@ -148,11 +148,28 @@ def _write_rows(path: Path, rows: list[dict[str, float | int]]) -> None:
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def run(config_path: Path) -> None:
+def run(
+    config_path: Path,
+    *,
+    detector_model: Path | None = None,
+    detector_device: str | None = None,
+    detector_cache: Path | None = None,
+    results_csv: Path | None = None,
+    decision_path: Path = Path("docs/PHASE6_DECISION.md"),
+    detector_label: str = "YOLO11n-OBB pretrained on the aerial DOTA task",
+) -> dict[str, float | int | bool]:
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     if config.get("mode") != "quick":
         raise RuntimeError("Phase 6 gate refuses to run unless mode is 'quick'")
     phase = config["phase6"]
+    if detector_model is not None:
+        phase["detector_model"] = str(detector_model)
+    if detector_device is not None:
+        phase["detector_device"] = detector_device
+    if detector_cache is not None:
+        phase["detector_cache"] = str(detector_cache)
+    if results_csv is not None:
+        phase["results_csv"] = str(results_csv)
     calibration_count = int(phase["calibration_frames"])
     evaluation_count = int(phase["evaluation_frames"])
     records = _load_manifest(
@@ -268,12 +285,13 @@ def run(config_path: Path) -> None:
         and first_outlier_fallback
     )
     status = "PASS" if passed else "FAIL"
-    Path("docs/PHASE6_DECISION.md").write_text(
+    decision_path.parent.mkdir(parents=True, exist_ok=True)
+    decision_path.write_text(
         f"""# Phase 6 decision
 
 Status: **{status}**
 
-YOLO11n-OBB pretrained on the aerial DOTA task supplied real small/large-vehicle detections. The
+{detector_label} supplied real small/large-vehicle detections. The
 first {calibration_count} synchronized frames calibrated bbox-center-to-antenna bias and a full
 anisotropic pixel covariance from {calibration.matched_samples} GT matches. No detector confidence
 was reinterpreted as pixel variance.
@@ -305,9 +323,35 @@ Mahalanobis pre-fusion gating falls back to RF-only when a visual candidate is a
     print(f"PHASE 6 QUICK GATE: {status}")
     if not passed:
         raise SystemExit(1)
+    return {
+        "calibration_matches": calibration.matched_samples,
+        "visual_updates": visual_updates,
+        "association_correct": association_correct,
+        "rf_rmse_3d_m": rf_rmse,
+        "fused_rmse_3d_m": fused_rmse,
+        "rf_z_rmse_m": rf_z_rmse,
+        "fused_z_rmse_m": fused_z_rmse,
+        "relative_gain_3d": gain_3d,
+        "relative_gain_z": gain_z,
+        "outlier_fallback": first_outlier_fallback,
+        "passed": passed,
+    }
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, default=Path("configs/quick.yaml"))
-    run(parser.parse_args().config)
+    parser.add_argument("--detector-model", type=Path)
+    parser.add_argument("--detector-device")
+    parser.add_argument("--detector-cache", type=Path)
+    parser.add_argument("--results-csv", type=Path)
+    parser.add_argument("--decision-path", type=Path, default=Path("docs/PHASE6_DECISION.md"))
+    arguments = parser.parse_args()
+    run(
+        arguments.config,
+        detector_model=arguments.detector_model,
+        detector_device=arguments.detector_device,
+        detector_cache=arguments.detector_cache,
+        results_csv=arguments.results_csv,
+        decision_path=arguments.decision_path,
+    )
