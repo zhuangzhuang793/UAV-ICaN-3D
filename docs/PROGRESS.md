@@ -1,8 +1,8 @@
 # UAV-ICaN 3D progress
 
-Current phase: Phase 7 — uncertainty-aware probabilistic prediction
+Current phase: Phase 8 — slow trajectory control and fast beam control
 
-Latest gate result: Phase 6 **PASS**
+Latest gate result: Phase 7 **PASS**
 
 Important outputs:
 
@@ -55,11 +55,18 @@ Important outputs:
 - On 20 held-out sequence frames, 19 real-vision updates and 18 correct RF-guided associations
   reduced 3-D RMSE from `1.912 m` to `1.134 m` and Z-RMSE from `0.801 m` to `0.625 m`.
 - A deliberate far detector outlier was rejected before fusion with RF-only fallback. Gate 6
-  passed; all 32 tests pass. See `docs/PHASE6_DECISION.md` and
+  passed. See `docs/PHASE6_DECISION.md` and
   `results/phase6_real_vision.csv`.
+- A 64-hidden-unit Gaussian predictor was quick-trained for 60 epochs (about eight seconds) on 600
+  synthetic belief histories split evenly between straight and constant-turn motion.
+- The full covariance-aware model achieved validation NLL `0.4101` versus `0.5828` for mean-only;
+  its 3-D coverage was `0.890` for a `0.900` target.
+- Scaling an otherwise fixed input covariance from low to high changed the predicted distribution
+  and increased mean output standard deviation by `2.842x`. Gate 7 passed; all 35 tests pass. See
+  `docs/PHASE7_DECISION.md` and `results/phase7_prediction.csv`.
 
-Next phase: Build a lightweight probabilistic trajectory predictor that consumes belief mean and
-covariance histories, train only on a small straight/turning synthetic set, and run Gate 7.
+Next phase: Run one short two-timescale episode using the saved predictor checkpoint,
+sampling-based robust MPC, and a 4x4 UPA 3-D beam codebook.
 
 Reproducible quick-test command:
 
@@ -78,4 +85,6 @@ PYTHONPATH=src .venv/bin/python experiments/run_phase5_gate.py --config configs/
 .venv/bin/python -m pytest -q tests/test_phase5_association.py
 PYTHONPATH=src .venv/bin/python experiments/run_phase6_gate.py --config configs/quick.yaml
 .venv/bin/python -m pytest -q tests/test_phase6_detector_calibration.py
+PYTHONPATH=src .venv/bin/python experiments/run_phase7_gate.py --config configs/quick.yaml
+.venv/bin/python -m pytest -q tests/test_phase7_prediction.py
 ```

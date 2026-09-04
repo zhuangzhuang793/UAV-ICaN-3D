@@ -139,3 +139,21 @@ phase6:
     minimum_evaluation_visual_updates: 12
     minimum_3d_rmse_gain: 0.05
     minimum_z_rmse_gain: 0.02
+
+phase7:
+  history_steps: 6
+  horizon_steps: 5
+  dt_s: 0.5
+  training_samples: 600
+  validation_samples: 200
+  hidden_size: 64
+  epochs: 60
+  batch_size: 64
+  learning_rate: 0.002
+  coverage_confidence: 0.90
+  results_csv: results/phase7_prediction.csv
+  checkpoint: checkpoints/phase7_full.pt
+  gate:
+    minimum_high_low_std_ratio: 1.25
+    minimum_nll_gain: 0.02
+    coverage_tolerance: 0.20
