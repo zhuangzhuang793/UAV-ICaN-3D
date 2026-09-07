@@ -1,0 +1,37 @@
+{
+  "air_sim_frames": 4800,
+  "classification": "post-F8 exploratory diagnostic; not formal F9",
+  "figures": [
+    "full_process_overview.pdf",
+    "f7_trajectory_overview.pdf",
+    "f7_trajectory_details.pdf"
+  ],
+  "raw_primary_results": 32000,
+  "sequence_ids": [
+    "seq00",
+    "seq01",
+    "seq02",
+    "seq03",
+    "seq04",
+    "seq05",
+    "seq06",
+    "seq07",
+    "seq08",
+    "seq09",
+    "seq10",
+    "seq11"
+  ],
+  "status": "COMPLETE",
+  "test_frames": 3200,
+  "test_sequence_ids": [
+    "seq04",
+    "seq05",
+    "seq06",
+    "seq07",
+    "seq08",
+    "seq09",
+    "seq10",
+    "seq11"
+  ],
+  "waveform_seeds_per_frame": 5
+}
