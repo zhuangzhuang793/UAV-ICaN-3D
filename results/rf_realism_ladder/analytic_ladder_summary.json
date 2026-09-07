@@ -1,0 +1,577 @@
+{
+  "calibrations": {
+    "array_calibration": {
+      "azimuth_rmse_deg": 5.486412578078643,
+      "bias_range_azimuth_elevation": [
+        1.4476113897745169,
+        -0.0005292045561142224,
+        0.004209854361322032
+      ],
+      "condition": "array_calibration",
+      "covariance_range_azimuth_elevation": [
+        [
+          142.79221016002109,
+          -0.00048146044061187805,
+          0.2886990277102776
+        ],
+        [
+          -0.00048146044061187805,
+          0.009170832311870927,
+          0.00046096269082102314
+        ],
+        [
+          0.2886990277102776,
+          0.00046096269082102314,
+          0.006232592030621296
+        ]
+      ],
+      "elevation_rmse_deg": 4.52918494003447,
+      "mean_snr_db": -0.465915268583398,
+      "range_rmse_m": 12.035777545283727,
+      "samples": 8000
+    },
+    "interference": {
+      "azimuth_rmse_deg": 10.762797644073778,
+      "bias_range_azimuth_elevation": [
+        1.1930363897745173,
+        -0.0037318837335238043,
+        0.0029303098534536774
+      ],
+      "condition": "interference",
+      "covariance_range_azimuth_elevation": [
+        [
+          118.54724370685054,
+          0.025314961362447725,
+          0.1614845764789987
+        ],
+        [
+          0.025314961362447725,
+          0.035277459923213364,
+          0.0004826637453127746
+        ],
+        [
+          0.1614845764789987,
+          0.0004826637453127746,
+          0.010874717029356051
+        ]
+      ],
+      "elevation_rmse_deg": 5.97668942706264,
+      "mean_snr_db": -0.465915268583398,
+      "range_rmse_m": 10.951975272922843,
+      "samples": 8000
+    },
+    "link_budget": {
+      "azimuth_rmse_deg": 5.353673607056911,
+      "bias_range_azimuth_elevation": [
+        0.8553988897745205,
+        0.0014942865454167131,
+        0.0028070459750315848
+      ],
+      "condition": "link_budget",
+      "covariance_range_azimuth_elevation": [
+        [
+          129.99318139610654,
+          0.022613844211393598,
+          0.24466863136312517
+        ],
+        [
+          0.022613844211393598,
+          0.008730509856906363,
+          0.00033788729720451424
+        ],
+        [
+          0.24466863136312517,
+          0.00033788729720451424,
+          0.004705985572536317
+        ]
+      ],
+      "elevation_rmse_deg": 3.933227100503243,
+      "mean_snr_db": -0.465915268583398,
+      "range_rmse_m": 11.432350622643602,
+      "samples": 8000
+    },
+    "synchronization": {
+      "azimuth_rmse_deg": 5.581009965517394,
+      "bias_range_azimuth_elevation": [
+        1.5519113897745207,
+        0.0005321737952548393,
+        0.003773522048323444
+      ],
+      "condition": "synchronization",
+      "covariance_range_azimuth_elevation": [
+        [
+          152.86692699965144,
+          0.011206701340444585,
+          0.3423580266431711
+        ],
+        [
+          0.011206701340444585,
+          0.009489788011559697,
+          0.0004555086693540311
+        ],
+        [
+          0.3423580266431711,
+          0.0004555086693540311,
+          0.006480371853971616
+        ]
+      ],
+      "elevation_rmse_deg": 4.616859579576105,
+      "mean_snr_db": -0.465915268583398,
+      "range_rmse_m": 12.459785264822516,
+      "samples": 8000
+    }
+  },
+  "conditions": [
+    {
+      "condition": "link_budget",
+      "distance_bins": [
+        {
+          "gain_3d": -0.003323654866084637,
+          "lower": 0.0,
+          "rf_only_full_3d": 4.807220588158923,
+          "rf_vision_shared_pose": 4.8231981302591,
+          "samples": 6510,
+          "upper": 50.0
+        },
+        {
+          "gain_3d": 0.01656990300517825,
+          "lower": 50.0,
+          "rf_only_full_3d": 15.759688408250303,
+          "rf_vision_shared_pose": 15.498551899933764,
+          "samples": 5490,
+          "upper": 65.0
+        },
+        {
+          "gain_3d": 0.047294023726132825,
+          "lower": 65.0,
+          "rf_only_full_3d": 29.630753183427796,
+          "rf_vision_shared_pose": 28.229395639347576,
+          "samples": 4000,
+          "upper": 1000000.0
+        }
+      ],
+      "gain_3d": 0.037320894152069996,
+      "gain_3d_sequence_bootstrap_95ci": [
+        0.011969148365042998,
+        0.047771227529290146
+      ],
+      "gain_z": -0.016856669023399055,
+      "methods": {
+        "rf_only_full_3d": {
+          "association_accuracy": 0.9645,
+          "fusion_optimizer_valid_rate": 0.98825,
+          "p95_error_3d_m": 4.891831172048649,
+          "rf_projection_valid_rate": 0.9991875,
+          "rmse_3d_m": 17.72340831950544,
+          "samples": 16000,
+          "visual_update_rate": 0.98825,
+          "z_rmse_m": 8.934719054787875
+        },
+        "rf_vision_shared_pose": {
+          "association_accuracy": 0.9645,
+          "fusion_optimizer_valid_rate": 0.98825,
+          "p95_error_3d_m": 5.037875444744441,
+          "rf_projection_valid_rate": 0.9991875,
+          "rmse_3d_m": 17.061954873599262,
+          "samples": 16000,
+          "visual_update_rate": 0.98825,
+          "z_rmse_m": 9.085328656711491
+        }
+      },
+      "rf_waveform": {
+        "azimuth_rmse_deg": 6.171009277533835,
+        "elevation_rmse_deg": 4.256882880463486,
+        "mean_snr_db": -0.5884756241581193,
+        "range_rmse_m": 13.589341387131576
+      },
+      "snr_bins": [
+        {
+          "gain_3d": 0.03924550688486924,
+          "lower": -1000000.0,
+          "rf_only_full_3d": 48.19208886095521,
+          "rf_vision_shared_pose": 46.30076590576636,
+          "samples": 1971,
+          "upper": -5.0
+        },
+        {
+          "gain_3d": 0.01875177954363028,
+          "lower": -5.0,
+          "rf_only_full_3d": 7.947438750359434,
+          "rf_vision_shared_pose": 7.7984101309761895,
+          "samples": 6833,
+          "upper": 0.0
+        },
+        {
+          "gain_3d": -0.0028989196724362306,
+          "lower": 0.0,
+          "rf_only_full_3d": 1.5701070913606723,
+          "rf_vision_shared_pose": 1.5746587056956494,
+          "samples": 6239,
+          "upper": 5.0
+        },
+        {
+          "gain_3d": -0.019505165019567106,
+          "lower": 5.0,
+          "rf_only_full_3d": 1.1829319801600457,
+          "rf_vision_shared_pose": 1.2060052636399907,
+          "samples": 957,
+          "upper": 1000000.0
+        }
+      ]
+    },
+    {
+      "condition": "synchronization",
+      "distance_bins": [
+        {
+          "gain_3d": -0.0029651399481661557,
+          "lower": 0.0,
+          "rf_only_full_3d": 6.74255176304849,
+          "rf_vision_shared_pose": 6.762544372633683,
+          "samples": 6510,
+          "upper": 50.0
+        },
+        {
+          "gain_3d": 0.017222346551021343,
+          "lower": 50.0,
+          "rf_only_full_3d": 16.203732691461052,
+          "rf_vision_shared_pose": 15.924666391628596,
+          "samples": 5490,
+          "upper": 65.0
+        },
+        {
+          "gain_3d": 0.08497649964582937,
+          "lower": 65.0,
+          "rf_only_full_3d": 28.89878203475413,
+          "rf_vision_shared_pose": 26.443064693412946,
+          "samples": 4000,
+          "upper": 1000000.0
+        }
+      ],
+      "gain_3d": 0.06000049555653346,
+      "gain_3d_sequence_bootstrap_95ci": [
+        0.0099898309988969,
+        0.09445678484045093
+      ],
+      "gain_z": -0.042974274812177395,
+      "methods": {
+        "rf_only_full_3d": {
+          "association_accuracy": 0.966125,
+          "fusion_optimizer_valid_rate": 0.989125,
+          "p95_error_3d_m": 6.044962502953958,
+          "rf_projection_valid_rate": 0.999,
+          "rmse_3d_m": 17.81497911332821,
+          "samples": 16000,
+          "visual_update_rate": 0.989125,
+          "z_rmse_m": 9.614368872691356
+        },
+        "rf_vision_shared_pose": {
+          "association_accuracy": 0.966125,
+          "fusion_optimizer_valid_rate": 0.989125,
+          "p95_error_3d_m": 6.043600344720242,
+          "rf_projection_valid_rate": 0.999,
+          "rmse_3d_m": 16.746071538199224,
+          "samples": 16000,
+          "visual_update_rate": 0.989125,
+          "z_rmse_m": 10.027539402772039
+        }
+      },
+      "rf_waveform": {
+        "azimuth_rmse_deg": 6.368065986128056,
+        "elevation_rmse_deg": 4.570826411604565,
+        "mean_snr_db": -0.5884756241581193,
+        "range_rmse_m": 13.554796866392941
+      },
+      "snr_bins": [
+        {
+          "gain_3d": 0.056458443504352425,
+          "lower": -1000000.0,
+          "rf_only_full_3d": 48.7424838156165,
+          "rf_vision_shared_pose": 45.990559046850706,
+          "samples": 1971,
+          "upper": -5.0
+        },
+        {
+          "gain_3d": 0.11539329868410521,
+          "lower": -5.0,
+          "rf_only_full_3d": 7.165097352720411,
+          "rf_vision_shared_pose": 6.3382931337972535,
+          "samples": 6833,
+          "upper": 0.0
+        },
+        {
+          "gain_3d": 0.010777883307776934,
+          "lower": 0.0,
+          "rf_only_full_3d": 2.5000662915913647,
+          "rf_vision_shared_pose": 2.4731208688388864,
+          "samples": 6239,
+          "upper": 5.0
+        },
+        {
+          "gain_3d": 0.011197125837364864,
+          "lower": 5.0,
+          "rf_only_full_3d": 2.380407899026571,
+          "rf_vision_shared_pose": 2.353754172236913,
+          "samples": 957,
+          "upper": 1000000.0
+        }
+      ]
+    },
+    {
+      "condition": "array_calibration",
+      "distance_bins": [
+        {
+          "gain_3d": 0.012238492499804013,
+          "lower": 0.0,
+          "rf_only_full_3d": 6.547529614788669,
+          "rf_vision_shared_pose": 6.467397722705833,
+          "samples": 6510,
+          "upper": 50.0
+        },
+        {
+          "gain_3d": 0.07442735288961515,
+          "lower": 50.0,
+          "rf_only_full_3d": 15.22933645893805,
+          "rf_vision_shared_pose": 14.095857260033986,
+          "samples": 5490,
+          "upper": 65.0
+        },
+        {
+          "gain_3d": 0.08065615096370982,
+          "lower": 65.0,
+          "rf_only_full_3d": 27.515476486202775,
+          "rf_vision_shared_pose": 25.296184060893196,
+          "samples": 4000,
+          "upper": 1000000.0
+        }
+      ],
+      "gain_3d": 0.07461529340279775,
+      "gain_3d_sequence_bootstrap_95ci": [
+        0.045876412583600104,
+        0.09120591393406638
+      ],
+      "gain_z": -0.05848428965190761,
+      "methods": {
+        "rf_only_full_3d": {
+          "association_accuracy": 0.9624375,
+          "fusion_optimizer_valid_rate": 0.9895625,
+          "p95_error_3d_m": 5.899192357040121,
+          "rf_projection_valid_rate": 0.9990625,
+          "rmse_3d_m": 16.920403521630373,
+          "samples": 16000,
+          "visual_update_rate": 0.9895625,
+          "z_rmse_m": 9.067141046755749
+        },
+        "rf_vision_shared_pose": {
+          "association_accuracy": 0.9624375,
+          "fusion_optimizer_valid_rate": 0.9895625,
+          "p95_error_3d_m": 6.105195602454097,
+          "rf_projection_valid_rate": 0.9990625,
+          "rmse_3d_m": 15.65788264837019,
+          "samples": 16000,
+          "visual_update_rate": 0.9895625,
+          "z_rmse_m": 9.597426350048913
+        }
+      },
+      "rf_waveform": {
+        "azimuth_rmse_deg": 6.33917508180725,
+        "elevation_rmse_deg": 4.443155025016254,
+        "mean_snr_db": -0.5884756241581193,
+        "range_rmse_m": 12.736507619406934
+      },
+      "snr_bins": [
+        {
+          "gain_3d": 0.08213483389327442,
+          "lower": -1000000.0,
+          "rf_only_full_3d": 45.60673268266596,
+          "rf_vision_shared_pose": 41.86083126936022,
+          "samples": 1971,
+          "upper": -5.0
+        },
+        {
+          "gain_3d": 0.015341349860853221,
+          "lower": -5.0,
+          "rf_only_full_3d": 8.007473116710182,
+          "rf_vision_shared_pose": 7.884627670125354,
+          "samples": 6833,
+          "upper": 0.0
+        },
+        {
+          "gain_3d": -0.00621974602965388,
+          "lower": 0.0,
+          "rf_only_full_3d": 2.4632252807930937,
+          "rf_vision_shared_pose": 2.4785459164534496,
+          "samples": 6239,
+          "upper": 5.0
+        },
+        {
+          "gain_3d": -0.05289362924021228,
+          "lower": 5.0,
+          "rf_only_full_3d": 2.3282371542227165,
+          "rf_vision_shared_pose": 2.45138606704146,
+          "samples": 957,
+          "upper": 1000000.0
+        }
+      ]
+    },
+    {
+      "condition": "interference",
+      "distance_bins": [
+        {
+          "gain_3d": 0.07453881329923016,
+          "lower": 0.0,
+          "rf_only_full_3d": 9.00113701479563,
+          "rf_vision_shared_pose": 8.330202943368988,
+          "samples": 6510,
+          "upper": 50.0
+        },
+        {
+          "gain_3d": 0.15806641935439067,
+          "lower": 50.0,
+          "rf_only_full_3d": 17.96738044775374,
+          "rf_vision_shared_pose": 15.127340955199218,
+          "samples": 5490,
+          "upper": 65.0
+        },
+        {
+          "gain_3d": 0.1900450579850337,
+          "lower": 65.0,
+          "rf_only_full_3d": 32.42676543431675,
+          "rf_vision_shared_pose": 26.264218917084936,
+          "samples": 4000,
+          "upper": 1000000.0
+        }
+      ],
+      "gain_3d": 0.1713449888589626,
+      "gain_3d_sequence_bootstrap_95ci": [
+        0.12637848380275335,
+        0.1869156564786027
+      ],
+      "gain_z": 0.03593927130899371,
+      "methods": {
+        "rf_only_full_3d": {
+          "association_accuracy": 0.8550625,
+          "fusion_optimizer_valid_rate": 0.9763125,
+          "p95_error_3d_m": 40.16050687868489,
+          "rf_projection_valid_rate": 0.9991875,
+          "rmse_3d_m": 20.16454596436827,
+          "samples": 16000,
+          "visual_update_rate": 0.9763125,
+          "z_rmse_m": 10.455812499754417
+        },
+        "rf_vision_shared_pose": {
+          "association_accuracy": 0.8550625,
+          "fusion_optimizer_valid_rate": 0.9763125,
+          "p95_error_3d_m": 20.260733287028035,
+          "rf_projection_valid_rate": 0.9991875,
+          "rmse_3d_m": 16.70945206075755,
+          "samples": 16000,
+          "visual_update_rate": 0.9763125,
+          "z_rmse_m": 10.080038217569776
+        }
+      },
+      "rf_waveform": {
+        "azimuth_rmse_deg": 11.479950988220548,
+        "elevation_rmse_deg": 6.6042411533531515,
+        "mean_snr_db": -0.5884756241581193,
+        "range_rmse_m": 12.400676060091786
+      },
+      "snr_bins": [
+        {
+          "gain_3d": 0.15372744585754453,
+          "lower": -1000000.0,
+          "rf_only_full_3d": 49.67057831013673,
+          "rf_vision_shared_pose": 42.03484717225226,
+          "samples": 1971,
+          "upper": -5.0
+        },
+        {
+          "gain_3d": 0.2348547245490849,
+          "lower": -5.0,
+          "rf_only_full_3d": 15.189083455633817,
+          "rf_vision_shared_pose": 11.621855444507874,
+          "samples": 6833,
+          "upper": 0.0
+        },
+        {
+          "gain_3d": 0.038942903726838694,
+          "lower": 0.0,
+          "rf_only_full_3d": 3.126484947337087,
+          "rf_vision_shared_pose": 3.0047305450295285,
+          "samples": 6239,
+          "upper": 5.0
+        },
+        {
+          "gain_3d": 0.010010765374951732,
+          "lower": 5.0,
+          "rf_only_full_3d": 2.4065787218640935,
+          "rf_vision_shared_pose": 2.382487026923161,
+          "samples": 957,
+          "upper": 1000000.0
+        }
+      ]
+    }
+  ],
+  "frozen_baseline": {
+    "condition": "ideal_fixed_0db",
+    "gain_3d": 0.07859355615411331,
+    "gain_3d_sequence_bootstrap_95ci": [
+      0.0628530106799005,
+      0.09291259959882729
+    ],
+    "gain_z": 0.024583972006081766,
+    "methods": {
+      "rf_only_full_3d": {
+        "coverage_95": 0.9781875,
+        "mean_position_nees": 2.318910629484271,
+        "method": "rf_only_full_3d",
+        "p95_error_3d_m": 2.9101716555469994,
+        "rmse_3d_m": 1.6341400316157704,
+        "samples": 16000,
+        "visual_update_rate": 0.9908125,
+        "z_rmse_m": 1.2135556762409805
+      },
+      "rf_vision_shared_pose": {
+        "coverage_95": 0.94225,
+        "mean_position_nees": 3.2356524596901135,
+        "method": "rf_vision_shared_pose",
+        "p95_error_3d_m": 2.864863108034239,
+        "rmse_3d_m": 1.5057071552772918,
+        "samples": 16000,
+        "visual_update_rate": 0.9908125,
+        "z_rmse_m": 1.1837216574684506
+      }
+    },
+    "rf_waveform": {
+      "azimuth_rmse_deg": 0.7343151571362222,
+      "elevation_rmse_deg": 0.7109075452377871,
+      "mean_snr_db": 0.0,
+      "range_rmse_m": 1.4075345161934503
+    }
+  },
+  "frozen_detection_cache_reused": true,
+  "frozen_visual_calibration_reused": true,
+  "held_out_test_frames": 3200,
+  "link_budget": {
+    "derived_tx_power_total_dbm": -17.827543647435803,
+    "noise_power_per_subcarrier_dbm": -110.18758762624412,
+    "receiver_noise_figure_db": 7.0,
+    "reference_range_m": 50.0,
+    "reference_snr_db": 0.0,
+    "rx_gain_dbi": 0.0,
+    "shadowing_frame_correlation": 0.95,
+    "shadowing_std_db": 3.0,
+    "snr_ceiling_db": 10.0,
+    "snr_floor_db": -15.0,
+    "system_loss_db": 0.0,
+    "tx_gain_dbi": 0.0
+  },
+  "sionna_reported_separately": true,
+  "status": "COMPLETE",
+  "test_seeds": [
+    20260971,
+    20260972,
+    20260973,
+    20260974,
+    20260975
+  ]
+}

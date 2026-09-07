@@ -25,7 +25,12 @@ from .rf_waveform import (
     srs_reference,
     upa_steering,
 )
-from .sionna_channel import SionnaPathChannel, synthesize_sionna_waveform, trace_sionna_channel
+from .sionna_channel import (
+    SionnaPathChannel,
+    sionna_received_power_gain,
+    synthesize_sionna_waveform,
+    trace_sionna_channel,
+)
 
 __all__ = [
     "PositionBounds",
@@ -52,6 +57,7 @@ __all__ = [
     "srs_reference",
     "upa_steering",
     "SionnaPathChannel",
+    "sionna_received_power_gain",
     "synthesize_sionna_waveform",
     "trace_sionna_channel",
 ]

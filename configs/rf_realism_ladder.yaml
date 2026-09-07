@@ -1,0 +1,63 @@
+base_config: configs/full_localization.yaml
+output_root: results/rf_realism_ladder
+seed: 20260907
+
+# The reference point retains the old experiment's 0 dB definition while making
+# distance, bandwidth, receiver noise and antenna gains explicit.  The resulting
+# total pilot-resource power is derived and written to the result artifact.
+link_budget:
+  reference_range_m: 50.0
+  reference_snr_db: 0.0
+  tx_gain_dbi: 0.0
+  rx_gain_dbi: 0.0
+  receiver_noise_figure_db: 7.0
+  system_loss_db: 0.0
+  shadowing_std_db: 3.0
+  shadowing_frame_correlation: 0.95
+  snr_floor_db: -15.0
+  snr_ceiling_db: 10.0
+
+synchronization:
+  clock_bias_std_m: 1.0
+  clock_drift_std_mps: 0.02
+  residual_cfo_std_hz: 2000.0
+  phase_noise_std_deg: 3.0
+
+array_calibration:
+  amplitude_std_db: 0.5
+  phase_std_deg: 5.0
+
+interference:
+  occupancy_probability: 0.30
+  interference_to_noise_db: -3.0
+
+protocol:
+  calibration_sequences: [seq00, seq01]
+  test_sequences: [seq04, seq05, seq06, seq07, seq08, seq09, seq10, seq11]
+  calibration_seeds:
+    [20261901, 20261902, 20261903, 20261904, 20261905,
+     20261906, 20261907, 20261908, 20261909, 20261910]
+  test_seeds: [20260971, 20260972, 20260973, 20260974, 20260975]
+  conditions:
+    - link_budget
+    - synchronization
+    - array_calibration
+    - interference
+  parallel_workers: 4
+  bootstrap_resamples: 10000
+  bootstrap_seed: 20261976
+  covariance_floor: [0.01, 7.615435494667714e-7, 7.615435494667714e-7]
+  distance_bins_m: [0.0, 50.0, 65.0, 1000000.0]
+  snr_bins_db: [-1000000.0, -5.0, 0.0, 5.0, 1000000.0]
+
+sionna:
+  gpu: 3
+  realizations_per_geometry: 200
+  seed_offset: 73000
+  # This is a separate eight-geometry propagation audit, not presented as a
+  # full-trajectory Sionna result.
+  include_reflections: true
+  diffuse_reflections: true
+  refraction: true
+  diffraction: true
+  edge_diffraction: false

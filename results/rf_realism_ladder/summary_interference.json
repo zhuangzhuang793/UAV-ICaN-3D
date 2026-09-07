@@ -1,0 +1,97 @@
+{
+  "condition": "interference",
+  "distance_bins": [
+    {
+      "gain_3d": 0.07453881329923016,
+      "lower": 0.0,
+      "rf_only_full_3d": 9.00113701479563,
+      "rf_vision_shared_pose": 8.330202943368988,
+      "samples": 6510,
+      "upper": 50.0
+    },
+    {
+      "gain_3d": 0.15806641935439067,
+      "lower": 50.0,
+      "rf_only_full_3d": 17.96738044775374,
+      "rf_vision_shared_pose": 15.127340955199218,
+      "samples": 5490,
+      "upper": 65.0
+    },
+    {
+      "gain_3d": 0.1900450579850337,
+      "lower": 65.0,
+      "rf_only_full_3d": 32.42676543431675,
+      "rf_vision_shared_pose": 26.264218917084936,
+      "samples": 4000,
+      "upper": 1000000.0
+    }
+  ],
+  "gain_3d": 0.1713449888589626,
+  "gain_3d_sequence_bootstrap_95ci": [
+    0.12637848380275335,
+    0.1869156564786027
+  ],
+  "gain_z": 0.03593927130899371,
+  "methods": {
+    "rf_only_full_3d": {
+      "association_accuracy": 0.8550625,
+      "fusion_optimizer_valid_rate": 0.9763125,
+      "p95_error_3d_m": 40.16050687868489,
+      "rf_projection_valid_rate": 0.9991875,
+      "rmse_3d_m": 20.16454596436827,
+      "samples": 16000,
+      "visual_update_rate": 0.9763125,
+      "z_rmse_m": 10.455812499754417
+    },
+    "rf_vision_shared_pose": {
+      "association_accuracy": 0.8550625,
+      "fusion_optimizer_valid_rate": 0.9763125,
+      "p95_error_3d_m": 20.260733287028035,
+      "rf_projection_valid_rate": 0.9991875,
+      "rmse_3d_m": 16.70945206075755,
+      "samples": 16000,
+      "visual_update_rate": 0.9763125,
+      "z_rmse_m": 10.080038217569776
+    }
+  },
+  "rf_waveform": {
+    "azimuth_rmse_deg": 11.479950988220548,
+    "elevation_rmse_deg": 6.6042411533531515,
+    "mean_snr_db": -0.5884756241581193,
+    "range_rmse_m": 12.400676060091786
+  },
+  "snr_bins": [
+    {
+      "gain_3d": 0.15372744585754453,
+      "lower": -1000000.0,
+      "rf_only_full_3d": 49.67057831013673,
+      "rf_vision_shared_pose": 42.03484717225226,
+      "samples": 1971,
+      "upper": -5.0
+    },
+    {
+      "gain_3d": 0.2348547245490849,
+      "lower": -5.0,
+      "rf_only_full_3d": 15.189083455633817,
+      "rf_vision_shared_pose": 11.621855444507874,
+      "samples": 6833,
+      "upper": 0.0
+    },
+    {
+      "gain_3d": 0.038942903726838694,
+      "lower": 0.0,
+      "rf_only_full_3d": 3.126484947337087,
+      "rf_vision_shared_pose": 3.0047305450295285,
+      "samples": 6239,
+      "upper": 5.0
+    },
+    {
+      "gain_3d": 0.010010765374951732,
+      "lower": 5.0,
+      "rf_only_full_3d": 2.4065787218640935,
+      "rf_vision_shared_pose": 2.382487026923161,
+      "samples": 957,
+      "upper": 1000000.0
+    }
+  ]
+}

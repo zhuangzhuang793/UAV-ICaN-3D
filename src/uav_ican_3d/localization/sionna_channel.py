@@ -45,6 +45,10 @@ def trace_sionna_channel(
     max_paths_per_source: int,
     synthetic_array: bool,
     seed: int,
+    diffuse_reflections: bool = False,
+    refraction: bool = False,
+    diffraction: bool = False,
+    edge_diffraction: bool = False,
 ) -> SionnaPathChannel:
     """Trace paths and return only the channel-side intermediate representation."""
 
@@ -83,10 +87,10 @@ def trace_sionna_channel(
         synthetic_array=bool(synthetic_array),
         los=True,
         specular_reflection=bool(reflections),
-        diffuse_reflection=False,
-        refraction=False,
-        diffraction=False,
-        edge_diffraction=False,
+        diffuse_reflection=bool(diffuse_reflections),
+        refraction=bool(refraction),
+        diffraction=bool(diffraction),
+        edge_diffraction=bool(edge_diffraction),
         seed=int(seed),
     )
     valid = np.asarray(paths.valid.numpy(), dtype=bool).reshape(-1)
@@ -102,8 +106,17 @@ def synthesize_sionna_waveform(
     snr_db: float,
     config: SRSWaveformConfig,
     rng: np.random.Generator,
+    *,
+    normalize_received_power: bool = True,
+    transmit_power_per_subcarrier_w: float | None = None,
+    noise_power_per_subcarrier_w: float | None = None,
 ) -> ComplexArray:
-    """Consume path truth inside the channel and emit only a complex received waveform."""
+    """Consume path truth and emit only a complex received waveform.
+
+    The default preserves the frozen F6 behavior.  Setting
+    ``normalize_received_power=False`` activates an absolute-power link budget;
+    both per-subcarrier powers must then be supplied in watts.
+    """
 
     coefficients = np.asarray(channel.coefficients_by_antenna_path)
     delays = np.asarray(channel.delays_s)
@@ -115,11 +128,40 @@ def synthesize_sionna_waveform(
     power = float(np.mean(np.abs(frequency_response) ** 2))
     if not np.isfinite(power) or power <= 0.0:
         raise RuntimeError("Sionna channel has zero or non-finite received power")
-    normalized = frequency_response / np.sqrt(power)
     pilots = srs_reference(config.subcarrier_count)
-    noiseless = pilots[:, None] * normalized
-    snr_linear = 10.0 ** (float(snr_db) / 10.0)
+    if normalize_received_power:
+        normalized = frequency_response / np.sqrt(power)
+        noiseless = pilots[:, None] * normalized
+        noise_variance = 1.0 / (10.0 ** (float(snr_db) / 10.0))
+    else:
+        if (
+            transmit_power_per_subcarrier_w is None
+            or noise_power_per_subcarrier_w is None
+            or transmit_power_per_subcarrier_w <= 0.0
+            or noise_power_per_subcarrier_w <= 0.0
+        ):
+            raise ValueError("absolute-power synthesis requires positive transmit/noise powers")
+        noiseless = pilots[:, None] * frequency_response * np.sqrt(
+            transmit_power_per_subcarrier_w
+        )
+        noise_variance = float(noise_power_per_subcarrier_w)
     noise = (
         rng.normal(size=noiseless.shape) + 1j * rng.normal(size=noiseless.shape)
-    ) / np.sqrt(2.0 * snr_linear)
+    ) * np.sqrt(noise_variance / 2.0)
     return noiseless + noise
+
+
+def sionna_received_power_gain(channel: SionnaPathChannel, config: SRSWaveformConfig) -> float:
+    """Return mean received power for unit per-subcarrier transmit power."""
+
+    coefficients = np.asarray(channel.coefficients_by_antenna_path)
+    delays = np.asarray(channel.delays_s)
+    response = np.einsum(
+        "al,kl->ka",
+        coefficients,
+        np.exp(-1j * 2.0 * np.pi * config.frequency_offsets_hz[:, None] * delays[None, :]),
+    )
+    power = float(np.mean(np.abs(response) ** 2))
+    if not np.isfinite(power) or power <= 0.0:
+        raise RuntimeError("Sionna channel has zero or non-finite received power")
+    return power

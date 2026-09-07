@@ -1,0 +1,32 @@
+{
+  "aggregate": [
+    {
+      "azimuth_rmse_deg": 26.539996349849034,
+      "channel": "los",
+      "elevation_rmse_deg": 24.835907729202365,
+      "range_rmse_m": 59.77199417687895,
+      "waveforms": 1600
+    },
+    {
+      "azimuth_rmse_deg": 26.427353253778556,
+      "channel": "multipath",
+      "elevation_rmse_deg": 22.789675352038714,
+      "range_rmse_m": 55.66381988974398,
+      "waveforms": 1600
+    }
+  ],
+  "limitation": "The available Sionna scene is a ground plane plus one wall, not the Cosys-AirSim map mesh.",
+  "noise_power_per_subcarrier_dbm": -110.18758762624412,
+  "normalization_removed": true,
+  "propagation": {
+    "diffraction": true,
+    "diffuse_reflection": true,
+    "edge_diffraction": false,
+    "los": true,
+    "refraction": true,
+    "specular_reflection": true
+  },
+  "scope": "eight frozen representative geometries; not full AirSim trajectories",
+  "status": "COMPLETE",
+  "transmit_power_total_dbm": -17.827543647435803
+}
